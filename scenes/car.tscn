@@ -228,6 +228,36 @@ rotation_degrees = Vector3(0, 0, 90)
 mesh = SubResource("m_wheel")
 surface_material_override/0 = SubResource("mat_wheel")
 
+[node name="ExhaustL1" type="MeshInstance3D" parent="."]
+position = Vector3(-0.4, 0.3, 2.22)
+mesh = SubResource("m_taillight")
+surface_material_override/0 = SubResource("mat_wheel")
+
+[node name="ExhaustR1" type="MeshInstance3D" parent="."]
+position = Vector3(0.4, 0.3, 2.22)
+mesh = SubResource("m_taillight")
+surface_material_override/0 = SubResource("mat_wheel")
+
+[node name="ExhaustL2" type="MeshInstance3D" parent="."]
+position = Vector3(-0.6, 0.3, 2.22)
+mesh = SubResource("m_taillight")
+surface_material_override/0 = SubResource("mat_wheel")
+
+[node name="ExhaustR2" type="MeshInstance3D" parent="."]
+position = Vector3(0.6, 0.3, 2.22)
+mesh = SubResource("m_taillight")
+surface_material_override/0 = SubResource("mat_wheel")
+
+[node name="SideSkirtL" type="MeshInstance3D" parent="."]
+position = Vector3(-0.95, 0.18, 0)
+mesh = SubResource("m_lower")
+surface_material_override/0 = SubResource("mat_wheel")
+
+[node name="SideSkirtR" type="MeshInstance3D" parent="."]
+position = Vector3(0.95, 0.18, 0)
+mesh = SubResource("m_lower")
+surface_material_override/0 = SubResource("mat_wheel")
+
 [node name="EngineSound" type="AudioStreamPlayer3D" parent="."]
 position = Vector3(0, 0.4, 1.5)
 script = ExtResource("2_snd")
