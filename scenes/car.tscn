@@ -1,43 +1,57 @@
-[gd_scene load_steps=19 format=3 uid="uid://bcar00000001"]
+[gd_scene load_steps=22 format=3 uid="uid://bcar00000001"]
 
 [ext_resource type="Script" path="res://scripts/car.gd" id="1_car"]
 [ext_resource type="Script" path="res://scripts/engine_sound.gd" id="2_snd"]
 
-[sub_resource type="BoxMesh" id="m_body"]
-size = Vector3(1.85, 0.3, 4.3)
+[sub_resource type="BoxMesh" id="m_chassis"]
+size = Vector3(1.95, 0.22, 4.4)
 
-[sub_resource type="BoxMesh" id="m_lower"]
-size = Vector3(2.0, 0.18, 4.5)
+[sub_resource type="PrismMesh" id="m_nose"]
+size = Vector3(1.85, 0.32, 1.3)
+
+[sub_resource type="PrismMesh" id="m_tail"]
+size = Vector3(1.85, 0.32, 1.0)
 
 [sub_resource type="BoxMesh" id="m_hood"]
-size = Vector3(1.7, 0.14, 1.5)
+size = Vector3(1.55, 0.06, 1.4)
 
-[sub_resource type="BoxMesh" id="m_trunk"]
-size = Vector3(1.7, 0.16, 1.0)
+[sub_resource type="BoxMesh" id="m_cabin_low"]
+size = Vector3(1.6, 0.18, 1.9)
 
-[sub_resource type="BoxMesh" id="m_cabin"]
-size = Vector3(1.55, 0.4, 1.7)
+[sub_resource type="PrismMesh" id="m_cabin_front"]
+size = Vector3(1.55, 0.42, 0.7)
 
-[sub_resource type="BoxMesh" id="m_glass"]
-size = Vector3(1.5, 0.42, 1.65)
+[sub_resource type="PrismMesh" id="m_cabin_rear"]
+size = Vector3(1.55, 0.42, 1.0)
 
-[sub_resource type="BoxMesh" id="m_spoiler_top"]
-size = Vector3(1.7, 0.06, 0.45)
+[sub_resource type="BoxMesh" id="m_glass_top"]
+size = Vector3(1.45, 0.02, 1.6)
+
+[sub_resource type="BoxMesh" id="m_skirt"]
+size = Vector3(0.08, 0.18, 3.0)
+
+[sub_resource type="BoxMesh" id="m_spoiler"]
+size = Vector3(1.7, 0.05, 0.35)
 
 [sub_resource type="BoxMesh" id="m_spoiler_l"]
-size = Vector3(0.06, 0.18, 0.45)
+size = Vector3(0.06, 0.18, 0.4)
 
 [sub_resource type="BoxMesh" id="m_mirror"]
-size = Vector3(0.18, 0.12, 0.22)
+size = Vector3(0.16, 0.1, 0.2)
 
 [sub_resource type="BoxMesh" id="m_headlight"]
-size = Vector3(0.5, 0.1, 0.05)
+size = Vector3(0.55, 0.08, 0.04)
 
 [sub_resource type="BoxMesh" id="m_taillight"]
-size = Vector3(0.55, 0.12, 0.05)
+size = Vector3(0.55, 0.1, 0.04)
+
+[sub_resource type="CylinderMesh" id="m_exhaust"]
+top_radius = 0.07
+bottom_radius = 0.07
+height = 0.14
 
 [sub_resource type="BoxShape3D" id="s_body"]
-size = Vector3(1.95, 0.85, 4.4)
+size = Vector3(1.95, 0.7, 4.4)
 
 [sub_resource type="CylinderMesh" id="m_wheel"]
 top_radius = 0.36
@@ -50,10 +64,10 @@ metallic = 0.2
 roughness = 0.8
 
 [sub_resource type="StandardMaterial3D" id="mat_glass"]
-albedo_color = Color(0.05, 0.07, 0.12, 0.65)
+albedo_color = Color(0.04, 0.05, 0.09, 0.7)
 transparency = 1
-metallic = 0.9
-roughness = 0.05
+metallic = 0.95
+roughness = 0.04
 
 [sub_resource type="StandardMaterial3D" id="mat_headlight"]
 albedo_color = Color(1, 0.96, 0.85, 1)
@@ -67,57 +81,76 @@ emission_enabled = true
 emission = Color(1, 0.05, 0.05, 1)
 emission_energy_multiplier = 1.8
 
+[sub_resource type="StandardMaterial3D" id="mat_exhaust"]
+albedo_color = Color(0.7, 0.7, 0.72, 1)
+metallic = 0.95
+roughness = 0.2
+
 [node name="Car" type="VehicleBody3D"]
 mass = 1300.0
 center_of_mass_mode = 1
-center_of_mass = Vector3(0, -0.55, 0)
+center_of_mass = Vector3(0, -0.45, 0)
 linear_damp = 0.1
 angular_damp = 1.5
 script = ExtResource("1_car")
 
 [node name="CarBody" type="MeshInstance3D" parent="."]
-position = Vector3(0, 0.45, 0)
-mesh = SubResource("m_body")
+position = Vector3(0, 0.46, 0)
+mesh = SubResource("m_chassis")
 
-[node name="LowerBody" type="MeshInstance3D" parent="."]
-position = Vector3(0, 0.25, 0)
-mesh = SubResource("m_lower")
+[node name="Nose" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.46, -2.85)
+rotation_degrees = Vector3(180, 180, 0)
+mesh = SubResource("m_nose")
+
+[node name="Tail" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.46, 2.7)
+mesh = SubResource("m_tail")
 
 [node name="Hood" type="MeshInstance3D" parent="."]
-position = Vector3(0, 0.62, -1.3)
+position = Vector3(0, 0.6, -1.3)
 mesh = SubResource("m_hood")
 
-[node name="Trunk" type="MeshInstance3D" parent="."]
-position = Vector3(0, 0.62, 1.55)
-mesh = SubResource("m_trunk")
+[node name="CabinFront" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.6, -0.85)
+rotation_degrees = Vector3(180, 180, 0)
+mesh = SubResource("m_cabin_front")
+
+[node name="LowerBody" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.65, 0.05)
+mesh = SubResource("m_cabin_low")
+
+[node name="CabinRear" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.6, 1.1)
+mesh = SubResource("m_cabin_rear")
 
 [node name="CarRoof" type="MeshInstance3D" parent="."]
-position = Vector3(0, 0.85, 0.05)
-mesh = SubResource("m_cabin")
+position = Vector3(0, 0.93, 0.1)
+mesh = SubResource("m_glass_top")
 
 [node name="Glass" type="MeshInstance3D" parent="."]
-position = Vector3(0, 0.86, 0.05)
-mesh = SubResource("m_glass")
+position = Vector3(0, 0.92, 0.1)
+mesh = SubResource("m_glass_top")
 surface_material_override/0 = SubResource("mat_glass")
 
 [node name="Spoiler" type="MeshInstance3D" parent="."]
-position = Vector3(0, 0.95, 2.0)
-mesh = SubResource("m_spoiler_top")
+position = Vector3(0, 0.85, 1.95)
+mesh = SubResource("m_spoiler")
 
 [node name="SpoilerL" type="MeshInstance3D" parent="."]
-position = Vector3(-0.7, 0.82, 2.0)
+position = Vector3(-0.7, 0.74, 1.95)
 mesh = SubResource("m_spoiler_l")
 
 [node name="SpoilerR" type="MeshInstance3D" parent="."]
-position = Vector3(0.7, 0.82, 2.0)
+position = Vector3(0.7, 0.74, 1.95)
 mesh = SubResource("m_spoiler_l")
 
 [node name="MirrorL" type="MeshInstance3D" parent="."]
-position = Vector3(-0.95, 0.82, -0.55)
+position = Vector3(-0.95, 0.78, -0.6)
 mesh = SubResource("m_mirror")
 
 [node name="MirrorR" type="MeshInstance3D" parent="."]
-position = Vector3(0.95, 0.82, -0.55)
+position = Vector3(0.95, 0.78, -0.6)
 mesh = SubResource("m_mirror")
 
 [node name="HeadlightL" type="MeshInstance3D" parent="."]
@@ -156,8 +189,36 @@ light_energy = 5.0
 spot_range = 40.0
 spot_angle = 32.0
 
+[node name="ExhaustL1" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, -0.3, 0.32, 2.22)
+mesh = SubResource("m_exhaust")
+surface_material_override/0 = SubResource("mat_exhaust")
+
+[node name="ExhaustR1" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0.3, 0.32, 2.22)
+mesh = SubResource("m_exhaust")
+surface_material_override/0 = SubResource("mat_exhaust")
+
+[node name="ExhaustL2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, -0.55, 0.32, 2.22)
+mesh = SubResource("m_exhaust")
+surface_material_override/0 = SubResource("mat_exhaust")
+
+[node name="ExhaustR2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0.55, 0.32, 2.22)
+mesh = SubResource("m_exhaust")
+surface_material_override/0 = SubResource("mat_exhaust")
+
+[node name="SideSkirtL" type="MeshInstance3D" parent="."]
+position = Vector3(-0.95, 0.32, 0)
+mesh = SubResource("m_skirt")
+
+[node name="SideSkirtR" type="MeshInstance3D" parent="."]
+position = Vector3(0.95, 0.32, 0)
+mesh = SubResource("m_skirt")
+
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-position = Vector3(0, 0.55, 0)
+position = Vector3(0, 0.5, 0)
 shape = SubResource("s_body")
 
 [node name="WheelFL" type="VehicleWheel3D" parent="."]
@@ -166,7 +227,7 @@ use_as_traction = false
 use_as_steering = true
 wheel_radius = 0.36
 wheel_friction_slip = 12.0
-suspension_travel = 0.2
+suspension_travel = 0.18
 suspension_stiffness = 60.0
 suspension_max_force = 9000.0
 damping_compression = 0.5
@@ -183,7 +244,7 @@ use_as_traction = false
 use_as_steering = true
 wheel_radius = 0.36
 wheel_friction_slip = 12.0
-suspension_travel = 0.2
+suspension_travel = 0.18
 suspension_stiffness = 60.0
 suspension_max_force = 9000.0
 damping_compression = 0.5
@@ -200,7 +261,7 @@ use_as_traction = true
 use_as_steering = false
 wheel_radius = 0.36
 wheel_friction_slip = 12.0
-suspension_travel = 0.2
+suspension_travel = 0.18
 suspension_stiffness = 60.0
 suspension_max_force = 9000.0
 damping_compression = 0.5
@@ -217,7 +278,7 @@ use_as_traction = true
 use_as_steering = false
 wheel_radius = 0.36
 wheel_friction_slip = 12.0
-suspension_travel = 0.2
+suspension_travel = 0.18
 suspension_stiffness = 60.0
 suspension_max_force = 9000.0
 damping_compression = 0.5
@@ -228,37 +289,6 @@ rotation_degrees = Vector3(0, 0, 90)
 mesh = SubResource("m_wheel")
 surface_material_override/0 = SubResource("mat_wheel")
 
-[node name="ExhaustL1" type="MeshInstance3D" parent="."]
-position = Vector3(-0.4, 0.3, 2.22)
-mesh = SubResource("m_taillight")
-surface_material_override/0 = SubResource("mat_wheel")
-
-[node name="ExhaustR1" type="MeshInstance3D" parent="."]
-position = Vector3(0.4, 0.3, 2.22)
-mesh = SubResource("m_taillight")
-surface_material_override/0 = SubResource("mat_wheel")
-
-[node name="ExhaustL2" type="MeshInstance3D" parent="."]
-position = Vector3(-0.6, 0.3, 2.22)
-mesh = SubResource("m_taillight")
-surface_material_override/0 = SubResource("mat_wheel")
-
-[node name="ExhaustR2" type="MeshInstance3D" parent="."]
-position = Vector3(0.6, 0.3, 2.22)
-mesh = SubResource("m_taillight")
-surface_material_override/0 = SubResource("mat_wheel")
-
-[node name="SideSkirtL" type="MeshInstance3D" parent="."]
-position = Vector3(-0.95, 0.18, 0)
-mesh = SubResource("m_lower")
-surface_material_override/0 = SubResource("mat_wheel")
-
-[node name="SideSkirtR" type="MeshInstance3D" parent="."]
-position = Vector3(0.95, 0.18, 0)
-mesh = SubResource("m_lower")
-surface_material_override/0 = SubResource("mat_wheel")
-
 [node name="EngineSound" type="AudioStreamPlayer3D" parent="."]
 position = Vector3(0, 0.4, 1.5)
 script = ExtResource("2_snd")
-

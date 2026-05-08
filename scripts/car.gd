@@ -26,23 +26,19 @@ func setup_from_data(data: Dictionary) -> void:
 	accent.albedo_color = accent_color
 	accent.metallic = 0.6
 	accent.roughness = 0.35
-	for n in ["CarBody", "Hood", "Trunk", "MirrorL", "MirrorR"]:
+	for n in ["CarBody", "Nose", "Tail", "Hood", "MirrorL", "MirrorR", "CabinFront", "CabinRear", "LowerBody"]:
 		if has_node(n):
 			get_node(n).set_surface_override_material(0, paint)
-	for n in ["LowerBody", "CarRoof", "Spoiler", "SpoilerL", "SpoilerR"]:
+	for n in ["CarRoof", "Spoiler", "SpoilerL", "SpoilerR", "SideSkirtL", "SideSkirtR"]:
 		if has_node(n):
 			get_node(n).set_surface_override_material(0, accent)
-	# Apply shape parameters
-	if data.has("body_scale") and has_node("CarBody"):
-		$CarBody.scale = data["body_scale"]
-	if data.has("body_scale") and has_node("LowerBody"):
-		$LowerBody.scale = data["body_scale"]
-	if data.has("roof_scale") and has_node("CarRoof"):
-		$CarRoof.scale = data["roof_scale"]
-	if data.has("roof_scale") and has_node("Glass"):
-		$Glass.scale = data["roof_scale"]
-	if data.get("hood_low", false) and has_node("Hood"):
-		$Hood.position.y = 0.55
+	# Apply shape parameters via scale on whole car
+	if data.has("body_scale"):
+		var bs: Vector3 = data["body_scale"]
+		# Apply only on visual length to avoid breaking wheels
+		for n in ["CarBody", "Nose", "Tail", "Hood", "LowerBody", "CabinFront", "CabinRear", "CarRoof", "Glass"]:
+			if has_node(n):
+				get_node(n).scale = Vector3(bs.x, bs.y, 1.0)
 	# Spoiler visibility
 	var big: bool = data.get("big_spoiler", false)
 	if has_node("Spoiler"): $Spoiler.visible = big
