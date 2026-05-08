@@ -1,0 +1,248 @@
+[gd_scene load_steps=15 format=3 uid="uid://bwrld0000001"]
+
+[ext_resource type="Script" path="res://scripts/world.gd" id="1_world"]
+[ext_resource type="Script" path="res://scripts/task_manager.gd" id="2_taskm"]
+[ext_resource type="Script" path="res://scripts/task_marker.gd" id="3_marker"]
+[ext_resource type="PackedScene" uid="uid://bhud00000001" path="res://scenes/hud.tscn" id="4_hud"]
+
+[sub_resource type="ProceduralSkyMaterial" id="Sky_mat"]
+sky_top_color = Color(0.25, 0.5, 0.9, 1)
+sky_horizon_color = Color(0.7, 0.8, 0.95, 1)
+ground_bottom_color = Color(0.15, 0.12, 0.1, 1)
+ground_horizon_color = Color(0.5, 0.45, 0.4, 1)
+
+[sub_resource type="Sky" id="Sky_1"]
+sky_material = SubResource("Sky_mat")
+
+[sub_resource type="Environment" id="Env_1"]
+background_mode = 2
+sky = SubResource("Sky_1")
+ambient_light_source = 3
+ambient_light_energy = 0.5
+fog_enabled = true
+fog_density = 0.003
+fog_aerial_perspective = 0.3
+glow_enabled = true
+glow_intensity = 0.6
+
+[sub_resource type="PlaneMesh" id="Ground_mesh"]
+size = Vector2(600, 600)
+
+[sub_resource type="StandardMaterial3D" id="Ground_mat"]
+albedo_color = Color(0.22, 0.28, 0.18, 1)
+roughness = 1.0
+
+[sub_resource type="WorldBoundaryShape3D" id="Ground_shape"]
+
+[sub_resource type="BoxMesh" id="Road_mesh"]
+size = Vector3(14, 0.05, 600)
+
+[sub_resource type="StandardMaterial3D" id="Road_mat"]
+albedo_color = Color(0.18, 0.18, 0.18, 1)
+roughness = 0.95
+
+[sub_resource type="BoxMesh" id="Road2_mesh"]
+size = Vector3(600, 0.05, 14)
+
+[sub_resource type="SphereShape3D" id="MarkerShape"]
+radius = 5.0
+
+[node name="World" type="Node3D"]
+script = ExtResource("1_world")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Env_1")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866, -0.354, 0.354, 0, 0.707, 0.707, -0.5, -0.612, 0.612, 0, 60, 0)
+light_color = Color(1, 0.97, 0.88, 1)
+light_energy = 2.5
+shadow_enabled = true
+directional_shadow_max_distance = 300.0
+
+[node name="Ground" type="StaticBody3D" parent="."]
+
+[node name="Mesh" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("Ground_mesh")
+surface_material_override/0 = SubResource("Ground_mat")
+cast_shadow = 0
+
+[node name="Col" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("Ground_shape")
+
+[node name="Roads" type="Node3D" parent="."]
+
+[node name="RoadNS" type="MeshInstance3D" parent="Roads"]
+position = Vector3(0, 0.01, 0)
+mesh = SubResource("Road_mesh")
+surface_material_override/0 = SubResource("Road_mat")
+cast_shadow = 0
+
+[node name="RoadEW" type="MeshInstance3D" parent="Roads"]
+position = Vector3(0, 0.01, 0)
+mesh = SubResource("Road2_mesh")
+surface_material_override/0 = SubResource("Road_mat")
+cast_shadow = 0
+
+[node name="RoadNS2" type="MeshInstance3D" parent="Roads"]
+position = Vector3(80, 0.01, 0)
+mesh = SubResource("Road_mesh")
+surface_material_override/0 = SubResource("Road_mat")
+cast_shadow = 0
+
+[node name="RoadNS3" type="MeshInstance3D" parent="Roads"]
+position = Vector3(-80, 0.01, 0)
+mesh = SubResource("Road_mesh")
+surface_material_override/0 = SubResource("Road_mat")
+cast_shadow = 0
+
+[node name="RoadEW2" type="MeshInstance3D" parent="Roads"]
+position = Vector3(0, 0.01, 80)
+mesh = SubResource("Road2_mesh")
+surface_material_override/0 = SubResource("Road_mat")
+cast_shadow = 0
+
+[node name="RoadEW3" type="MeshInstance3D" parent="Roads"]
+position = Vector3(0, 0.01, -80)
+mesh = SubResource("Road2_mesh")
+surface_material_override/0 = SubResource("Road_mat")
+cast_shadow = 0
+
+[node name="Buildings" type="Node3D" parent="."]
+
+[node name="B1" type="CSGBox3D" parent="Buildings"]
+position = Vector3(25, 15, 30)
+size = Vector3(20, 30, 20)
+use_collision = true
+
+[node name="B2" type="CSGBox3D" parent="Buildings"]
+position = Vector3(-30, 20, 30)
+size = Vector3(18, 40, 18)
+use_collision = true
+
+[node name="B3" type="CSGBox3D" parent="Buildings"]
+position = Vector3(30, 12, -30)
+size = Vector3(22, 24, 20)
+use_collision = true
+
+[node name="B4" type="CSGBox3D" parent="Buildings"]
+position = Vector3(-28, 18, -28)
+size = Vector3(16, 36, 16)
+use_collision = true
+
+[node name="B5" type="CSGBox3D" parent="Buildings"]
+position = Vector3(100, 25, 50)
+size = Vector3(25, 50, 22)
+use_collision = true
+
+[node name="B6" type="CSGBox3D" parent="Buildings"]
+position = Vector3(-100, 18, 50)
+size = Vector3(20, 36, 20)
+use_collision = true
+
+[node name="B7" type="CSGBox3D" parent="Buildings"]
+position = Vector3(100, 22, -50)
+size = Vector3(22, 44, 22)
+use_collision = true
+
+[node name="B8" type="CSGBox3D" parent="Buildings"]
+position = Vector3(-100, 15, -50)
+size = Vector3(18, 30, 18)
+use_collision = true
+
+[node name="B9" type="CSGBox3D" parent="Buildings"]
+position = Vector3(50, 28, 100)
+size = Vector3(24, 56, 20)
+use_collision = true
+
+[node name="B10" type="CSGBox3D" parent="Buildings"]
+position = Vector3(-50, 20, 100)
+size = Vector3(20, 40, 18)
+use_collision = true
+
+[node name="B11" type="CSGBox3D" parent="Buildings"]
+position = Vector3(50, 16, -100)
+size = Vector3(18, 32, 20)
+use_collision = true
+
+[node name="B12" type="CSGBox3D" parent="Buildings"]
+position = Vector3(-50, 24, -100)
+size = Vector3(22, 48, 22)
+use_collision = true
+
+[node name="TaskManager" type="Node3D" parent="."]
+script = ExtResource("2_taskm")
+
+[node name="Marker1" type="Area3D" parent="TaskManager"]
+position = Vector3(0, 1, 80)
+script = ExtResource("3_marker")
+marker_index = 0
+monitoring = true
+
+[node name="Col" type="CollisionShape3D" parent="TaskManager/Marker1"]
+shape = SubResource("MarkerShape")
+
+[node name="Beacon" type="CSGBox3D" parent="TaskManager/Marker1"]
+position = Vector3(0, 3, 0)
+size = Vector3(1.5, 6, 1.5)
+
+[node name="Marker2" type="Area3D" parent="TaskManager"]
+position = Vector3(80, 1, 0)
+visible = false
+script = ExtResource("3_marker")
+marker_index = 1
+monitoring = true
+
+[node name="Col" type="CollisionShape3D" parent="TaskManager/Marker2"]
+shape = SubResource("MarkerShape")
+
+[node name="Beacon" type="CSGBox3D" parent="TaskManager/Marker2"]
+position = Vector3(0, 3, 0)
+size = Vector3(1.5, 6, 1.5)
+
+[node name="Marker3" type="Area3D" parent="TaskManager"]
+position = Vector3(0, 1, -80)
+visible = false
+script = ExtResource("3_marker")
+marker_index = 2
+monitoring = true
+
+[node name="Col" type="CollisionShape3D" parent="TaskManager/Marker3"]
+shape = SubResource("MarkerShape")
+
+[node name="Beacon" type="CSGBox3D" parent="TaskManager/Marker3"]
+position = Vector3(0, 3, 0)
+size = Vector3(1.5, 6, 1.5)
+
+[node name="Marker4" type="Area3D" parent="TaskManager"]
+position = Vector3(-80, 1, 0)
+visible = false
+script = ExtResource("3_marker")
+marker_index = 3
+monitoring = true
+
+[node name="Col" type="CollisionShape3D" parent="TaskManager/Marker4"]
+shape = SubResource("MarkerShape")
+
+[node name="Beacon" type="CSGBox3D" parent="TaskManager/Marker4"]
+position = Vector3(0, 3, 0)
+size = Vector3(1.5, 6, 1.5)
+
+[node name="Marker5" type="Area3D" parent="TaskManager"]
+position = Vector3(0, 1, 5)
+visible = false
+script = ExtResource("3_marker")
+marker_index = 4
+monitoring = true
+
+[node name="Col" type="CollisionShape3D" parent="TaskManager/Marker5"]
+shape = SubResource("MarkerShape")
+
+[node name="Beacon" type="CSGBox3D" parent="TaskManager/Marker5"]
+position = Vector3(0, 3, 0)
+size = Vector3(1.5, 6, 1.5)
+
+[node name="CarSpawn" type="Marker3D" parent="."]
+position = Vector3(0, 1.0, 0)
+
+[node name="HUD" parent="." instance=ExtResource("4_hud")]

@@ -1,0 +1,133 @@
+[gd_scene load_steps=8 format=3 uid="uid://bcar00000001"]
+
+[ext_resource type="Script" path="res://scripts/car.gd" id="1_car"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_chassis"]
+size = Vector3(2.0, 0.45, 4.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_cabin"]
+size = Vector3(1.55, 0.5, 2.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_body"]
+size = Vector3(2.0, 0.95, 4.5)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_wheel"]
+top_radius = 0.35
+bottom_radius = 0.35
+height = 0.28
+
+[sub_resource type="StandardMaterial3D" id="Mat_wheel"]
+albedo_color = Color(0.1, 0.1, 0.1, 1)
+roughness = 0.9
+
+[sub_resource type="StandardMaterial3D" id="Mat_window"]
+albedo_color = Color(0.4, 0.65, 0.9, 0.5)
+transparency = 1
+roughness = 0.05
+metallic = 0.3
+
+[node name="Car" type="VehicleBody3D"]
+mass = 1300.0
+script = ExtResource("1_car")
+
+[node name="CarBody" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.225, 0)
+mesh = SubResource("BoxMesh_chassis")
+
+[node name="CarRoof" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.7, -0.15)
+mesh = SubResource("BoxMesh_cabin")
+
+[node name="Windows" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.7, -0.15)
+mesh = SubResource("BoxMesh_cabin")
+surface_material_override/0 = SubResource("Mat_window")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+position = Vector3(0, 0.475, 0)
+shape = SubResource("BoxShape3D_body")
+
+[node name="WheelFL" type="VehicleWheel3D" parent="."]
+position = Vector3(-0.9, 0.35, -1.5)
+use_as_traction = false
+use_as_steering = true
+wheel_radius = 0.35
+wheel_friction_slip = 10.5
+suspension_travel = 0.18
+suspension_stiffness = 55.0
+suspension_max_force = 8000.0
+
+[node name="MeshFL" type="MeshInstance3D" parent="WheelFL"]
+rotation_degrees = Vector3(0.0, 0.0, 90.0)
+mesh = SubResource("CylinderMesh_wheel")
+surface_material_override/0 = SubResource("Mat_wheel")
+
+[node name="WheelFR" type="VehicleWheel3D" parent="."]
+position = Vector3(0.9, 0.35, -1.5)
+use_as_traction = false
+use_as_steering = true
+wheel_radius = 0.35
+wheel_friction_slip = 10.5
+suspension_travel = 0.18
+suspension_stiffness = 55.0
+suspension_max_force = 8000.0
+
+[node name="MeshFR" type="MeshInstance3D" parent="WheelFR"]
+rotation_degrees = Vector3(0.0, 0.0, 90.0)
+mesh = SubResource("CylinderMesh_wheel")
+surface_material_override/0 = SubResource("Mat_wheel")
+
+[node name="WheelRL" type="VehicleWheel3D" parent="."]
+position = Vector3(-0.9, 0.35, 1.5)
+use_as_traction = true
+use_as_steering = false
+wheel_radius = 0.35
+wheel_friction_slip = 10.5
+suspension_travel = 0.18
+suspension_stiffness = 55.0
+suspension_max_force = 8000.0
+
+[node name="MeshRL" type="MeshInstance3D" parent="WheelRL"]
+rotation_degrees = Vector3(0.0, 0.0, 90.0)
+mesh = SubResource("CylinderMesh_wheel")
+surface_material_override/0 = SubResource("Mat_wheel")
+
+[node name="WheelRR" type="VehicleWheel3D" parent="."]
+position = Vector3(0.9, 0.35, 1.5)
+use_as_traction = true
+use_as_steering = false
+wheel_radius = 0.35
+wheel_friction_slip = 10.5
+suspension_travel = 0.18
+suspension_stiffness = 55.0
+suspension_max_force = 8000.0
+
+[node name="MeshRR" type="MeshInstance3D" parent="WheelRR"]
+rotation_degrees = Vector3(0.0, 0.0, 90.0)
+mesh = SubResource("CylinderMesh_wheel")
+surface_material_override/0 = SubResource("Mat_wheel")
+
+[node name="CameraMount" type="Node3D" parent="."]
+position = Vector3(0, 3.0, 7.5)
+
+[node name="Camera3D" type="Camera3D" parent="CameraMount"]
+transform = Transform3D(1, 0, 0, 0, 0.94, 0.34, 0, -0.34, 0.94, 0, 0, 0)
+fov = 75.0
+
+[node name="Headlights" type="Node3D" parent="."]
+
+[node name="LightL" type="SpotLight3D" parent="Headlights"]
+position = Vector3(-0.65, 0.45, -2.3)
+rotation_degrees = Vector3(-8.0, 180.0, 0.0)
+light_color = Color(1, 0.97, 0.88, 1)
+light_energy = 4.0
+spot_range = 35.0
+spot_angle = 28.0
+
+[node name="LightR" type="SpotLight3D" parent="Headlights"]
+position = Vector3(0.65, 0.45, -2.3)
+rotation_degrees = Vector3(-8.0, 180.0, 0.0)
+light_color = Color(1, 0.97, 0.88, 1)
+light_energy = 4.0
+spot_range = 35.0
+spot_angle = 28.0

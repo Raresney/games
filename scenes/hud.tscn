@@ -1,0 +1,54 @@
+[gd_scene load_steps=2 format=3 uid="uid://bhud00000001"]
+
+[ext_resource type="Script" path="res://scripts/hud.gd" id="1_hud"]
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_hud")
+
+[node name="Panel" type="Panel" parent="."]
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_right = 320.0
+offset_bottom = 160.0
+offset_left = 20.0
+offset_top = 20.0
+
+[node name="VBox" type="VBoxContainer" parent="Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+theme_override_constants/separation = 8
+
+[node name="CarLabel" type="Label" parent="Panel/VBox"]
+text = "Car"
+theme_override_font_sizes/font_size = 18
+
+[node name="SpeedLabel" type="Label" parent="Panel/VBox"]
+text = "0 km/h"
+theme_override_font_sizes/font_size = 32
+theme_override_colors/font_color = Color(0.2, 1.0, 0.4, 1)
+
+[node name="TaskLabel" type="Label" parent="Panel/VBox"]
+text = "▶  Loading..."
+theme_override_font_sizes/font_size = 14
+autowrap_mode = 2
+
+[node name="ScoreLabel" type="Label" parent="Panel/VBox"]
+text = "Score:  $0"
+theme_override_font_sizes/font_size = 15
+theme_override_colors/font_color = Color(1.0, 0.85, 0.1, 1)
+
+[node name="ControlsLabel" type="Label" parent="."]
+anchor_left = 0.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -35.0
+offset_bottom = -5.0
+horizontal_alignment = 1
+text = "W/S — Accelerate/Brake    A/D — Steer    SPACE — Handbrake    ESC — Menu"
+theme_override_font_sizes/font_size = 12
+theme_override_colors/font_color = Color(0.85, 0.85, 0.85, 0.8)
