@@ -1,54 +1,100 @@
-[gd_scene load_steps=2 format=3 uid="uid://bhud00000001"]
+[gd_scene load_steps=4 format=3 uid="uid://bhud00000001"]
 
 [ext_resource type="Script" path="res://scripts/hud.gd" id="1_hud"]
+
+[sub_resource type="StyleBoxFlat" id="sb_panel"]
+bg_color = Color(0.04, 0.05, 0.08, 0.55)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.2, 0.85, 1.0, 0.5)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+
+[sub_resource type="StyleBoxFlat" id="sb_speedbar"]
+bg_color = Color(0.1, 0.95, 0.45, 0.85)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_hud")
 
-[node name="Panel" type="Panel" parent="."]
+[node name="SpeedPanel" type="PanelContainer" parent="."]
+anchor_left = 0.0
+anchor_top = 1.0
 anchor_right = 0.0
-anchor_bottom = 0.0
-offset_right = 320.0
-offset_bottom = 160.0
-offset_left = 20.0
-offset_top = 20.0
-
-[node name="VBox" type="VBoxContainer" parent="Panel"]
-anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 10.0
-offset_top = 10.0
-offset_right = -10.0
-offset_bottom = -10.0
-theme_override_constants/separation = 8
+offset_left = 24.0
+offset_top = -210.0
+offset_right = 280.0
+offset_bottom = -24.0
+theme_override_styles/panel = SubResource("sb_panel")
 
-[node name="CarLabel" type="Label" parent="Panel/VBox"]
-text = "Car"
-theme_override_font_sizes/font_size = 18
+[node name="V" type="VBoxContainer" parent="SpeedPanel"]
+theme_override_constants/separation = 4
 
-[node name="SpeedLabel" type="Label" parent="Panel/VBox"]
-text = "0 km/h"
-theme_override_font_sizes/font_size = 32
-theme_override_colors/font_color = Color(0.2, 1.0, 0.4, 1)
+[node name="CarLabel" type="Label" parent="SpeedPanel/V"]
+text = "Lamborghini"
+theme_override_colors/font_color = Color(0.85, 0.92, 1, 0.85)
+theme_override_font_sizes/font_size = 16
+horizontal_alignment = 1
 
-[node name="TaskLabel" type="Label" parent="Panel/VBox"]
-text = "▶  Loading..."
+[node name="SpeedLabel" type="Label" parent="SpeedPanel/V"]
+text = "0"
+theme_override_font_sizes/font_size = 64
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+horizontal_alignment = 1
+
+[node name="UnitLabel" type="Label" parent="SpeedPanel/V"]
+text = "km/h"
+theme_override_colors/font_color = Color(0.6, 0.85, 1, 0.85)
 theme_override_font_sizes/font_size = 14
+horizontal_alignment = 1
+
+[node name="SpeedBar" type="ProgressBar" parent="SpeedPanel/V"]
+custom_minimum_size = Vector2(0, 8)
+max_value = 250.0
+show_percentage = false
+theme_override_styles/fill = SubResource("sb_speedbar")
+
+[node name="TaskPanel" type="PanelContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.0
+anchor_right = 0.5
+anchor_bottom = 0.0
+offset_left = -240.0
+offset_top = 24.0
+offset_right = 240.0
+offset_bottom = 110.0
+theme_override_styles/panel = SubResource("sb_panel")
+
+[node name="V" type="VBoxContainer" parent="TaskPanel"]
+
+[node name="TaskLabel" type="Label" parent="TaskPanel/V"]
+text = "▶  Loading..."
+theme_override_colors/font_color = Color(1, 0.95, 0.5, 1)
+theme_override_font_sizes/font_size = 20
+horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="ScoreLabel" type="Label" parent="Panel/VBox"]
+[node name="ScoreLabel" type="Label" parent="TaskPanel/V"]
 text = "Score:  $0"
-theme_override_font_sizes/font_size = 15
-theme_override_colors/font_color = Color(1.0, 0.85, 0.1, 1)
+theme_override_colors/font_color = Color(1, 0.85, 0.1, 1)
+theme_override_font_sizes/font_size = 22
+horizontal_alignment = 1
 
 [node name="ControlsLabel" type="Label" parent="."]
 anchor_left = 0.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -35.0
-offset_bottom = -5.0
+offset_top = -28.0
 horizontal_alignment = 1
-text = "W/S — Accelerate/Brake    A/D — Steer    SPACE — Handbrake    ESC — Menu"
-theme_override_font_sizes/font_size = 12
-theme_override_colors/font_color = Color(0.85, 0.85, 0.85, 0.8)
+text = "W/S — Accelerate/Brake     A/D — Steer     SPACE — Handbrake     ESC — Menu"
+theme_override_font_sizes/font_size = 13
+theme_override_colors/font_color = Color(0.85, 0.9, 1, 0.7)

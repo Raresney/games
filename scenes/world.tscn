@@ -4,6 +4,8 @@
 [ext_resource type="Script" path="res://scripts/task_manager.gd" id="2_taskm"]
 [ext_resource type="Script" path="res://scripts/task_marker.gd" id="3_marker"]
 [ext_resource type="PackedScene" uid="uid://bhud00000001" path="res://scenes/hud.tscn" id="4_hud"]
+[ext_resource type="Script" path="res://scripts/city_decorator.gd" id="5_deco"]
+[ext_resource type="Script" path="res://scripts/city_decorator.gd" id="5_deco"]
 
 [sub_resource type="ProceduralSkyMaterial" id="Sky_mat"]
 sky_top_color = Color(0.25, 0.5, 0.9, 1)
@@ -18,19 +20,44 @@ sky_material = SubResource("Sky_mat")
 background_mode = 2
 sky = SubResource("Sky_1")
 ambient_light_source = 3
-ambient_light_energy = 0.5
-fog_enabled = true
-fog_density = 0.003
-fog_aerial_perspective = 0.3
+ambient_light_energy = 0.4
+ambient_light_sky_contribution = 0.6
+tonemap_mode = 3
+tonemap_exposure = 1.05
+tonemap_white = 6.0
+ssr_enabled = true
+ssr_max_steps = 48
+ssao_enabled = true
+ssao_intensity = 1.4
+ssao_radius = 1.5
+ssao_detail = 1.5
+ssil_enabled = true
+ssil_intensity = 0.7
+ssil_radius = 4.0
+sdfgi_enabled = false
 glow_enabled = true
-glow_intensity = 0.6
+glow_intensity = 0.85
+glow_strength = 1.1
+glow_bloom = 0.2
+glow_blend_mode = 1
+glow_hdr_threshold = 1.0
+glow_hdr_scale = 2.5
+fog_enabled = true
+fog_light_color = Color(0.65, 0.72, 0.85, 1)
+fog_density = 0.0025
+fog_aerial_perspective = 0.4
+fog_sky_affect = 0.3
+adjustment_enabled = true
+adjustment_brightness = 1.02
+adjustment_contrast = 1.12
+adjustment_saturation = 1.08
 
 [sub_resource type="PlaneMesh" id="Ground_mesh"]
 size = Vector2(600, 600)
 
 [sub_resource type="StandardMaterial3D" id="Ground_mat"]
-albedo_color = Color(0.22, 0.28, 0.18, 1)
-roughness = 1.0
+albedo_color = Color(0.18, 0.24, 0.14, 1)
+roughness = 0.95
 
 [sub_resource type="WorldBoundaryShape3D" id="Ground_shape"]
 
@@ -38,8 +65,10 @@ roughness = 1.0
 size = Vector3(14, 0.05, 600)
 
 [sub_resource type="StandardMaterial3D" id="Road_mat"]
-albedo_color = Color(0.18, 0.18, 0.18, 1)
-roughness = 0.95
+albedo_color = Color(0.09, 0.09, 0.1, 1)
+metallic = 0.05
+metallic_specular = 0.6
+roughness = 0.55
 
 [sub_resource type="BoxMesh" id="Road2_mesh"]
 size = Vector3(600, 0.05, 14)
@@ -55,10 +84,18 @@ environment = SubResource("Env_1")
 
 [node name="Sun" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.866, -0.354, 0.354, 0, 0.707, 0.707, -0.5, -0.612, 0.612, 0, 60, 0)
-light_color = Color(1, 0.97, 0.88, 1)
-light_energy = 2.5
+light_color = Color(1, 0.96, 0.86, 1)
+light_energy = 2.0
+light_angular_distance = 1.0
 shadow_enabled = true
-directional_shadow_max_distance = 300.0
+shadow_bias = 0.05
+shadow_blur = 1.5
+directional_shadow_mode = 2
+directional_shadow_split_1 = 0.08
+directional_shadow_split_2 = 0.22
+directional_shadow_split_3 = 0.55
+directional_shadow_blend_splits = true
+directional_shadow_max_distance = 250.0
 
 [node name="Ground" type="StaticBody3D" parent="."]
 
@@ -107,6 +144,12 @@ position = Vector3(0, 0.01, -80)
 mesh = SubResource("Road2_mesh")
 surface_material_override/0 = SubResource("Road_mat")
 cast_shadow = 0
+
+[node name="CityDecorator" type="Node3D" parent="."]
+script = ExtResource("5_deco")
+
+[node name="CityDecorator" type="Node3D" parent="."]
+script = ExtResource("5_deco")
 
 [node name="Buildings" type="Node3D" parent="."]
 

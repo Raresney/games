@@ -68,7 +68,11 @@ emission = Color(1, 0.05, 0.05, 1)
 emission_energy_multiplier = 1.8
 
 [node name="Car" type="VehicleBody3D"]
-mass = 1100.0
+mass = 1300.0
+center_of_mass_mode = 1
+center_of_mass = Vector3(0, -0.55, 0)
+linear_damp = 0.1
+angular_damp = 1.5
 script = ExtResource("1_car")
 
 [node name="CarBody" type="MeshInstance3D" parent="."]
@@ -228,9 +232,3 @@ surface_material_override/0 = SubResource("mat_wheel")
 position = Vector3(0, 0.4, 1.5)
 script = ExtResource("2_snd")
 
-[node name="CameraMount" type="Node3D" parent="."]
-position = Vector3(0, 3.0, 7.5)
-
-[node name="Camera3D" type="Camera3D" parent="CameraMount"]
-transform = Transform3D(1, 0, 0, 0, 0.94, 0.34, 0, -0.34, 0.94, 0, 0, 0)
-fov = 70.0
