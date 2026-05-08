@@ -25,10 +25,10 @@ func _physics_process(delta: float) -> void:
 	var throttle: float = Input.get_axis("brake", "accelerate")
 	var speed: float = linear_velocity.length()
 	if throttle > 0.0:
-		engine_force = throttle * engine_force_max
+		engine_force = -throttle * engine_force_max
 		brake = 0.0
 	elif throttle < 0.0:
-		engine_force = throttle * engine_force_max * 0.4
+		engine_force = -throttle * engine_force_max * 0.4
 		brake = 0.0
 	else:
 		engine_force = 0.0
