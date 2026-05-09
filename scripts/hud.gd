@@ -19,4 +19,10 @@ func _process(_delta: float) -> void:
 		speed_bar.value = s
 	if task_manager:
 		task_label.text = "▶  " + task_manager.get_task_text()
+		# Color time-pressured tasks red
+		var rem: float = task_manager.get_remaining_time()
+		if rem < 5.0 and rem > 0.0:
+			task_label.modulate = Color(1.0, 0.4, 0.4)
+		else:
+			task_label.modulate = Color(1, 1, 1)
 		score_label.text = "Score:  $" + str(task_manager.score)

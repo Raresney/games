@@ -8,10 +8,10 @@
 [ext_resource type="Script" path="res://scripts/city_decorator.gd" id="5_deco"]
 
 [sub_resource type="ProceduralSkyMaterial" id="Sky_mat"]
-sky_top_color = Color(0.25, 0.5, 0.9, 1)
-sky_horizon_color = Color(0.7, 0.8, 0.95, 1)
-ground_bottom_color = Color(0.15, 0.12, 0.1, 1)
-ground_horizon_color = Color(0.5, 0.45, 0.4, 1)
+sky_top_color = Color(0.32, 0.55, 0.92, 1)
+sky_horizon_color = Color(0.78, 0.85, 0.95, 1)
+ground_bottom_color = Color(0.18, 0.18, 0.22, 1)
+ground_horizon_color = Color(0.55, 0.5, 0.45, 1)
 
 [sub_resource type="Sky" id="Sky_1"]
 sky_material = SubResource("Sky_mat")
@@ -20,43 +20,34 @@ sky_material = SubResource("Sky_mat")
 background_mode = 2
 sky = SubResource("Sky_1")
 ambient_light_source = 3
-ambient_light_energy = 0.4
+ambient_light_energy = 0.8
 ambient_light_sky_contribution = 0.6
 tonemap_mode = 3
-tonemap_exposure = 1.05
+tonemap_exposure = 1.0
 tonemap_white = 6.0
 ssr_enabled = true
-ssr_max_steps = 48
+ssr_max_steps = 32
 ssao_enabled = true
-ssao_intensity = 1.4
-ssao_radius = 1.5
-ssao_detail = 1.5
-ssil_enabled = true
-ssil_intensity = 0.7
-ssil_radius = 4.0
-sdfgi_enabled = false
+ssao_intensity = 1.0
+ssao_radius = 1.2
 glow_enabled = true
-glow_intensity = 0.85
-glow_strength = 1.1
-glow_bloom = 0.2
-glow_blend_mode = 1
-glow_hdr_threshold = 1.0
-glow_hdr_scale = 2.5
+glow_intensity = 0.4
+glow_strength = 1.0
+glow_bloom = 0.08
+glow_hdr_threshold = 1.6
 fog_enabled = true
 fog_light_color = Color(0.65, 0.72, 0.85, 1)
 fog_density = 0.0025
-fog_aerial_perspective = 0.4
-fog_sky_affect = 0.3
+fog_aerial_perspective = 0.3
 adjustment_enabled = true
-adjustment_brightness = 1.02
-adjustment_contrast = 1.12
+adjustment_contrast = 1.05
 adjustment_saturation = 1.08
 
 [sub_resource type="PlaneMesh" id="Ground_mesh"]
 size = Vector2(600, 600)
 
 [sub_resource type="StandardMaterial3D" id="Ground_mat"]
-albedo_color = Color(0.18, 0.24, 0.14, 1)
+albedo_color = Color(0.25, 0.32, 0.2, 1)
 roughness = 0.95
 
 [sub_resource type="WorldBoundaryShape3D" id="Ground_shape"]
@@ -65,10 +56,9 @@ roughness = 0.95
 size = Vector3(14, 0.05, 600)
 
 [sub_resource type="StandardMaterial3D" id="Road_mat"]
-albedo_color = Color(0.09, 0.09, 0.1, 1)
+albedo_color = Color(0.22, 0.22, 0.24, 1)
 metallic = 0.05
-metallic_specular = 0.6
-roughness = 0.55
+roughness = 0.6
 
 [sub_resource type="BoxMesh" id="Road2_mesh"]
 size = Vector3(600, 0.05, 14)
@@ -84,18 +74,12 @@ environment = SubResource("Env_1")
 
 [node name="Sun" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.866, -0.354, 0.354, 0, 0.707, 0.707, -0.5, -0.612, 0.612, 0, 60, 0)
-light_color = Color(1, 0.96, 0.86, 1)
-light_energy = 2.0
-light_angular_distance = 1.0
+light_color = Color(1.0, 0.96, 0.86, 1)
+light_energy = 2.2
 shadow_enabled = true
 shadow_bias = 0.05
-shadow_blur = 1.5
-directional_shadow_mode = 2
-directional_shadow_split_1 = 0.08
-directional_shadow_split_2 = 0.22
-directional_shadow_split_3 = 0.55
-directional_shadow_blend_splits = true
-directional_shadow_max_distance = 250.0
+shadow_blur = 1.2
+directional_shadow_max_distance = 220.0
 
 [node name="Ground" type="StaticBody3D" parent="."]
 
@@ -272,7 +256,7 @@ position = Vector3(0, 3, 0)
 size = Vector3(1.5, 6, 1.5)
 
 [node name="Marker5" type="Area3D" parent="TaskManager"]
-position = Vector3(0, 1, 5)
+position = Vector3(0, 1, 200)
 visible = false
 script = ExtResource("3_marker")
 marker_index = 4
@@ -282,6 +266,48 @@ monitoring = true
 shape = SubResource("MarkerShape")
 
 [node name="Beacon" type="CSGBox3D" parent="TaskManager/Marker5"]
+position = Vector3(0, 3, 0)
+size = Vector3(1.5, 6, 1.5)
+
+[node name="Marker6" type="Area3D" parent="TaskManager"]
+position = Vector3(0, 1, -200)
+visible = false
+script = ExtResource("3_marker")
+marker_index = 5
+monitoring = true
+
+[node name="Col" type="CollisionShape3D" parent="TaskManager/Marker6"]
+shape = SubResource("MarkerShape")
+
+[node name="Beacon" type="CSGBox3D" parent="TaskManager/Marker6"]
+position = Vector3(0, 3, 0)
+size = Vector3(1.5, 6, 1.5)
+
+[node name="Marker7" type="Area3D" parent="TaskManager"]
+position = Vector3(200, 1, 0)
+visible = false
+script = ExtResource("3_marker")
+marker_index = 6
+monitoring = true
+
+[node name="Col" type="CollisionShape3D" parent="TaskManager/Marker7"]
+shape = SubResource("MarkerShape")
+
+[node name="Beacon" type="CSGBox3D" parent="TaskManager/Marker7"]
+position = Vector3(0, 3, 0)
+size = Vector3(1.5, 6, 1.5)
+
+[node name="Marker8" type="Area3D" parent="TaskManager"]
+position = Vector3(0, 1, 0)
+visible = false
+script = ExtResource("3_marker")
+marker_index = 7
+monitoring = true
+
+[node name="Col" type="CollisionShape3D" parent="TaskManager/Marker8"]
+shape = SubResource("MarkerShape")
+
+[node name="Beacon" type="CSGBox3D" parent="TaskManager/Marker8"]
 position = Vector3(0, 3, 0)
 size = Vector3(1.5, 6, 1.5)
 
