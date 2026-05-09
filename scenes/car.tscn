@@ -44,10 +44,30 @@ size = Vector3(1.95, 0.04, 0.4)
 size = Vector3(1.85, 0.05, 0.45)
 
 [sub_resource type="BoxMesh" id="m_spoiler"]
-size = Vector3(1.7, 0.05, 0.3)
+size = Vector3(1.85, 0.06, 0.5)
 
 [sub_resource type="BoxMesh" id="m_spoiler_l"]
-size = Vector3(0.05, 0.25, 0.35)
+size = Vector3(0.06, 0.4, 0.5)
+
+[sub_resource type="BoxMesh" id="m_hood_scoop"]
+size = Vector3(0.6, 0.12, 0.7)
+
+[sub_resource type="BoxMesh" id="m_stripe"]
+size = Vector3(0.18, 0.005, 4.0)
+
+[sub_resource type="CylinderMesh" id="m_exhaust_big"]
+top_radius = 0.12
+bottom_radius = 0.13
+height = 0.22
+
+[sub_resource type="StandardMaterial3D" id="mat_stripe"]
+albedo_color = Color(0.05, 0.05, 0.05, 1)
+roughness = 0.4
+
+[sub_resource type="StandardMaterial3D" id="mat_carbon"]
+albedo_color = Color(0.06, 0.06, 0.07, 1)
+metallic = 0.3
+roughness = 0.5
 
 [sub_resource type="BoxMesh" id="m_mirror"]
 size = Vector3(0.18, 0.1, 0.22)
@@ -224,35 +244,53 @@ position = Vector3(0.97, 0.28, 0)
 mesh = SubResource("m_skirt")
 
 [node name="Spoiler" type="MeshInstance3D" parent="."]
-position = Vector3(0, 0.95, 1.95)
+position = Vector3(0, 1.1, 2.0)
 mesh = SubResource("m_spoiler")
+surface_material_override/0 = SubResource("mat_carbon")
 
 [node name="SpoilerL" type="MeshInstance3D" parent="."]
-position = Vector3(-0.7, 0.82, 1.95)
+position = Vector3(-0.75, 0.85, 2.0)
 mesh = SubResource("m_spoiler_l")
+surface_material_override/0 = SubResource("mat_carbon")
 
 [node name="SpoilerR" type="MeshInstance3D" parent="."]
-position = Vector3(0.7, 0.82, 1.95)
+position = Vector3(0.75, 0.85, 2.0)
 mesh = SubResource("m_spoiler_l")
+surface_material_override/0 = SubResource("mat_carbon")
+
+[node name="HoodScoop" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.7, -0.95)
+mesh = SubResource("m_hood_scoop")
+surface_material_override/0 = SubResource("mat_carbon")
+
+[node name="StripeL" type="MeshInstance3D" parent="."]
+position = Vector3(-0.25, 0.62, 0)
+mesh = SubResource("m_stripe")
+surface_material_override/0 = SubResource("mat_stripe")
+
+[node name="StripeR" type="MeshInstance3D" parent="."]
+position = Vector3(0.25, 0.62, 0)
+mesh = SubResource("m_stripe")
+surface_material_override/0 = SubResource("mat_stripe")
 
 [node name="ExhaustL1" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, -0.32, 0.32, 2.25)
-mesh = SubResource("m_exhaust")
+mesh = SubResource("m_exhaust_big")
 surface_material_override/0 = SubResource("mat_exhaust")
 
 [node name="ExhaustR1" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0.32, 0.32, 2.25)
-mesh = SubResource("m_exhaust")
+mesh = SubResource("m_exhaust_big")
 surface_material_override/0 = SubResource("mat_exhaust")
 
 [node name="ExhaustL2" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, -0.55, 0.32, 2.25)
-mesh = SubResource("m_exhaust")
+mesh = SubResource("m_exhaust_big")
 surface_material_override/0 = SubResource("mat_exhaust")
 
 [node name="ExhaustR2" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0.55, 0.32, 2.25)
-mesh = SubResource("m_exhaust")
+mesh = SubResource("m_exhaust_big")
 surface_material_override/0 = SubResource("mat_exhaust")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]

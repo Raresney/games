@@ -77,7 +77,7 @@ horizontal_alignment = 1
 
 [node name="SpeedBar" type="ProgressBar" parent="SpeedPanel/V"]
 custom_minimum_size = Vector2(0, 8)
-max_value = 450.0
+max_value = 280.0
 show_percentage = false
 theme_override_styles/fill = SubResource("sb_speedbar")
 

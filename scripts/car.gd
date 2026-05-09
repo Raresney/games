@@ -17,10 +17,10 @@ var is_drifting: bool = false
 var prev_velocity: Vector3 = Vector3.ZERO
 
 func setup_from_data(data: Dictionary) -> void:
-	engine_force_max = data.get("engine_force", 1000.0) * 22.0
-	top_speed = data.get("top_speed", 100.0) * 2.2
+	engine_force_max = data.get("engine_force", 1000.0) * 11.0
+	top_speed = data.get("top_speed", 100.0) * 1.0
 	max_steer_angle = data.get("max_steer", 0.5)
-	max_brake = 55.0
+	max_brake = 42.0
 	var car_color: Color = data.get("color", Color.WHITE)
 	var accent_color: Color = data.get("accent", Color(0.05, 0.05, 0.05, 1))
 	var paint := StandardMaterial3D.new()
@@ -41,18 +41,11 @@ func setup_from_data(data: Dictionary) -> void:
 	for n in ["LowerBody", "Splitter", "Diffuser", "IntakeL", "IntakeR", "Spoiler", "SpoilerL", "SpoilerR", "SideSkirtL", "SideSkirtR"]:
 		if has_node(n):
 			get_node(n).set_surface_override_material(0, accent)
-	var big: bool = data.get("big_spoiler", false)
-	for n in ["Spoiler", "SpoilerL", "SpoilerR"]:
-		if has_node(n): get_node(n).visible = big
-	var skirts: bool = data.get("side_skirts", true)
-	for n in ["SideSkirtL", "SideSkirtR"]:
-		if has_node(n): get_node(n).visible = skirts
-	var twin: bool = data.get("twin_exhaust", false)
-	var quad: bool = data.get("quad_exhaust", false)
-	if has_node("ExhaustL1"): $ExhaustL1.visible = twin or quad
-	if has_node("ExhaustR1"): $ExhaustR1.visible = twin or quad
-	if has_node("ExhaustL2"): $ExhaustL2.visible = quad
-	if has_node("ExhaustR2"): $ExhaustR2.visible = quad
+	# Tuned: all cars get spoiler, side skirts, and quad exhaust
+	for n in ["Spoiler", "SpoilerL", "SpoilerR", "SideSkirtL", "SideSkirtR", "HoodScoop", "StripeL", "StripeR"]:
+		if has_node(n): get_node(n).visible = true
+	for n in ["ExhaustL1", "ExhaustR1", "ExhaustL2", "ExhaustR2"]:
+		if has_node(n): get_node(n).visible = true
 	contact_monitor = true
 	max_contacts_reported = 4
 	body_entered.connect(_on_body_entered)
