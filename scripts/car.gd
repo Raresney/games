@@ -17,9 +17,10 @@ var is_drifting: bool = false
 var prev_velocity: Vector3 = Vector3.ZERO
 
 func setup_from_data(data: Dictionary) -> void:
-	engine_force_max = data.get("engine_force", 1000.0) * 12.0
-	top_speed = data.get("top_speed", 100.0) * 1.5
+	engine_force_max = data.get("engine_force", 1000.0) * 22.0
+	top_speed = data.get("top_speed", 100.0) * 2.2
 	max_steer_angle = data.get("max_steer", 0.5)
+	max_brake = 55.0
 	var car_color: Color = data.get("color", Color.WHITE)
 	var accent_color: Color = data.get("accent", Color(0.05, 0.05, 0.05, 1))
 	var paint := StandardMaterial3D.new()
@@ -74,10 +75,10 @@ func _physics_process(delta: float) -> void:
 	# Nitro: regenerates over time, consumed when held
 	var boost_active: bool = Input.is_action_pressed("nitro") and nitro > 1.0 and throttle > 0.0
 	if boost_active:
-		nitro = max(0.0, nitro - delta * 35.0)
+		nitro = max(0.0, nitro - delta * 30.0)
 	else:
-		nitro = min(100.0, nitro + delta * 12.0)
-	var boost_mult: float = 1.7 if boost_active else 1.0
+		nitro = min(100.0, nitro + delta * 18.0)
+	var boost_mult: float = 2.2 if boost_active else 1.0
 	var top_speed_now: float = top_speed * boost_mult
 
 	# Engine + brake

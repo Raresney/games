@@ -264,12 +264,12 @@ position = Vector3(-0.9, 0.36, -1.4)
 use_as_traction = false
 use_as_steering = true
 wheel_radius = 0.36
-wheel_friction_slip = 9.0
-suspension_travel = 0.18
-suspension_stiffness = 60.0
-suspension_max_force = 9000.0
-damping_compression = 0.5
-damping_relaxation = 0.6
+wheel_friction_slip = 14.0
+suspension_travel = 0.16
+suspension_stiffness = 75.0
+suspension_max_force = 11000.0
+damping_compression = 0.55
+damping_relaxation = 0.65
 
 [node name="M" type="MeshInstance3D" parent="WheelFL"]
 rotation_degrees = Vector3(0, 0, 90)
@@ -285,12 +285,12 @@ position = Vector3(0.9, 0.36, -1.4)
 use_as_traction = false
 use_as_steering = true
 wheel_radius = 0.36
-wheel_friction_slip = 9.0
-suspension_travel = 0.18
-suspension_stiffness = 60.0
-suspension_max_force = 9000.0
-damping_compression = 0.5
-damping_relaxation = 0.6
+wheel_friction_slip = 14.0
+suspension_travel = 0.16
+suspension_stiffness = 75.0
+suspension_max_force = 11000.0
+damping_compression = 0.55
+damping_relaxation = 0.65
 
 [node name="M" type="MeshInstance3D" parent="WheelFR"]
 rotation_degrees = Vector3(0, 0, 90)
@@ -306,12 +306,12 @@ position = Vector3(-0.9, 0.36, 1.5)
 use_as_traction = true
 use_as_steering = false
 wheel_radius = 0.36
-wheel_friction_slip = 9.0
-suspension_travel = 0.18
-suspension_stiffness = 60.0
-suspension_max_force = 9000.0
-damping_compression = 0.5
-damping_relaxation = 0.6
+wheel_friction_slip = 14.0
+suspension_travel = 0.16
+suspension_stiffness = 75.0
+suspension_max_force = 11000.0
+damping_compression = 0.55
+damping_relaxation = 0.65
 
 [node name="M" type="MeshInstance3D" parent="WheelRL"]
 rotation_degrees = Vector3(0, 0, 90)
@@ -327,12 +327,12 @@ position = Vector3(0.9, 0.36, 1.5)
 use_as_traction = true
 use_as_steering = false
 wheel_radius = 0.36
-wheel_friction_slip = 9.0
-suspension_travel = 0.18
-suspension_stiffness = 60.0
-suspension_max_force = 9000.0
-damping_compression = 0.5
-damping_relaxation = 0.6
+wheel_friction_slip = 14.0
+suspension_travel = 0.16
+suspension_stiffness = 75.0
+suspension_max_force = 11000.0
+damping_compression = 0.55
+damping_relaxation = 0.65
 
 [node name="M" type="MeshInstance3D" parent="WheelRR"]
 rotation_degrees = Vector3(0, 0, 90)
