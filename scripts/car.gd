@@ -67,9 +67,9 @@ func _physics_process(delta: float) -> void:
 	var speed: float = linear_velocity.length()
 	var steer_input: float = Input.get_axis("steer_right", "steer_left")
 
-	# Steering
+	# Steering (inverted because car runs in reverse Godot direction)
 	var sf: float = clamp(1.0 - speed / 50.0, 0.22, 1.0)
-	steering = steer_input * max_steer_angle * sf
+	steering = -steer_input * max_steer_angle * sf
 
 	# Nitro: regenerates over time, consumed when held
 	var boost_active: bool = Input.is_action_pressed("nitro") and nitro > 1.0 and throttle > 0.0
@@ -129,10 +129,10 @@ func _physics_process(delta: float) -> void:
 	var roll_vel: float = angular_velocity.dot(fwd_axis)
 	angular_velocity -= fwd_axis * roll_vel * 0.5
 
-	# Yaw assist
+	# Yaw assist (sign flipped to match steering inversion)
 	if abs(steer_input) > 0.05 and speed > 1.0:
 		var yaw_axis: Vector3 = transform.basis.y
-		var assist: float = -steer_input * mass * clamp(speed * 0.4, 1.0, 8.0)
+		var assist: float = steer_input * mass * clamp(speed * 0.4, 1.0, 8.0)
 		apply_torque(yaw_axis * assist)
 
 	# Restoring torque if very tilted
