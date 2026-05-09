@@ -5,10 +5,16 @@
 [ext_resource type="Script" path="res://scripts/skid_smoke.gd" id="3_smoke"]
 
 [sub_resource type="BoxMesh" id="m_chassis"]
-size = Vector3(1.85, 0.22, 4.4)
+size = Vector3(1.85, 0.20, 4.4)
 
 [sub_resource type="BoxMesh" id="m_lower"]
-size = Vector3(1.95, 0.16, 4.5)
+size = Vector3(1.95, 0.14, 4.5)
+
+[sub_resource type="BoxMesh" id="m_side_panel"]
+size = Vector3(0.05, 0.55, 3.2)
+
+[sub_resource type="BoxMesh" id="m_a_pillar"]
+size = Vector3(0.06, 0.42, 0.06)
 
 [sub_resource type="BoxMesh" id="m_hood"]
 size = Vector3(1.55, 0.05, 1.5)
@@ -92,12 +98,36 @@ size = Vector3(1.95, 0.7, 4.4)
 [sub_resource type="CylinderMesh" id="m_wheel"]
 top_radius = 0.36
 bottom_radius = 0.36
-height = 0.32
+height = 0.34
+
+[sub_resource type="CylinderMesh" id="m_rim"]
+top_radius = 0.26
+bottom_radius = 0.26
+height = 0.36
+
+[sub_resource type="CylinderMesh" id="m_disc"]
+top_radius = 0.24
+bottom_radius = 0.24
+height = 0.04
+
+[sub_resource type="BoxMesh" id="m_spoke"]
+size = Vector3(0.06, 0.32, 0.04)
 
 [sub_resource type="StandardMaterial3D" id="mat_wheel"]
-albedo_color = Color(0.04, 0.04, 0.04, 1)
-metallic = 0.2
-roughness = 0.85
+albedo_color = Color(0.025, 0.025, 0.03, 1)
+metallic = 0.05
+roughness = 0.95
+
+[sub_resource type="StandardMaterial3D" id="mat_rim"]
+albedo_color = Color(0.85, 0.85, 0.9, 1)
+metallic = 1.0
+metallic_specular = 1.0
+roughness = 0.15
+
+[sub_resource type="StandardMaterial3D" id="mat_disc"]
+albedo_color = Color(0.55, 0.55, 0.6, 1)
+metallic = 0.85
+roughness = 0.4
 
 [sub_resource type="StandardMaterial3D" id="mat_glass"]
 albedo_color = Color(0.05, 0.07, 0.1, 0.55)
@@ -143,16 +173,34 @@ transform = Transform3D(1, 0, 0, 0, 0.978, -0.208, 0, 0.208, 0.978, 0, 0.62, -1.
 mesh = SubResource("m_hood")
 
 [node name="CabinFront" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.643, 0.766, 0, -0.766, 0.643, 0, 0.85, -0.65)
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866, 0, -0.866, 0.5, 0, 0.78, -0.5)
 mesh = SubResource("m_windshield")
 surface_material_override/0 = SubResource("mat_glass")
+
+[node name="APillarL" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866, 0, -0.866, 0.5, -0.7, 0.78, -0.5)
+mesh = SubResource("m_a_pillar")
+surface_material_override/0 = SubResource("mat_carbon")
+
+[node name="APillarR" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866, 0, -0.866, 0.5, 0.7, 0.78, -0.5)
+mesh = SubResource("m_a_pillar")
+surface_material_override/0 = SubResource("mat_carbon")
+
+[node name="SidePanelL" type="MeshInstance3D" parent="."]
+position = Vector3(-0.92, 0.55, 0)
+mesh = SubResource("m_side_panel")
+
+[node name="SidePanelR" type="MeshInstance3D" parent="."]
+position = Vector3(0.92, 0.55, 0)
+mesh = SubResource("m_side_panel")
 
 [node name="CarRoof" type="MeshInstance3D" parent="."]
 position = Vector3(0, 1.05, 0.1)
 mesh = SubResource("m_roof")
 
 [node name="CabinRear" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.643, -0.766, 0, 0.766, 0.643, 0, 0.85, 0.85)
+transform = Transform3D(1, 0, 0, 0, 0.5, -0.866, 0, 0.866, 0.5, 0, 0.78, 0.7)
 mesh = SubResource("m_reargl")
 surface_material_override/0 = SubResource("mat_glass")
 
@@ -314,6 +362,40 @@ rotation_degrees = Vector3(0, 0, 90)
 mesh = SubResource("m_wheel")
 surface_material_override/0 = SubResource("mat_wheel")
 
+[node name="Rim" type="MeshInstance3D" parent="WheelFL"]
+rotation_degrees = Vector3(0, 0, 90)
+mesh = SubResource("m_rim")
+surface_material_override/0 = SubResource("mat_rim")
+
+[node name="Disc" type="MeshInstance3D" parent="WheelFL"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, -0.16, 0, 0)
+mesh = SubResource("m_disc")
+surface_material_override/0 = SubResource("mat_disc")
+
+[node name="S1" type="MeshInstance3D" parent="WheelFL"]
+mesh = SubResource("m_spoke")
+surface_material_override/0 = SubResource("mat_rim")
+
+[node name="S2" type="MeshInstance3D" parent="WheelFL"]
+rotation_degrees = Vector3(72, 0, 0)
+mesh = SubResource("m_spoke")
+surface_material_override/0 = SubResource("mat_rim")
+
+[node name="S3" type="MeshInstance3D" parent="WheelFL"]
+rotation_degrees = Vector3(144, 0, 0)
+mesh = SubResource("m_spoke")
+surface_material_override/0 = SubResource("mat_rim")
+
+[node name="S4" type="MeshInstance3D" parent="WheelFL"]
+rotation_degrees = Vector3(36, 0, 0)
+mesh = SubResource("m_spoke")
+surface_material_override/0 = SubResource("mat_rim")
+
+[node name="S5" type="MeshInstance3D" parent="WheelFL"]
+rotation_degrees = Vector3(108, 0, 0)
+mesh = SubResource("m_spoke")
+surface_material_override/0 = SubResource("mat_rim")
+
 [node name="Smoke" type="GPUParticles3D" parent="WheelFL"]
 position = Vector3(0, -0.3, 0)
 script = ExtResource("3_smoke")
@@ -334,6 +416,40 @@ damping_relaxation = 0.65
 rotation_degrees = Vector3(0, 0, 90)
 mesh = SubResource("m_wheel")
 surface_material_override/0 = SubResource("mat_wheel")
+
+[node name="Rim" type="MeshInstance3D" parent="WheelFR"]
+rotation_degrees = Vector3(0, 0, 90)
+mesh = SubResource("m_rim")
+surface_material_override/0 = SubResource("mat_rim")
+
+[node name="Disc" type="MeshInstance3D" parent="WheelFR"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0.16, 0, 0)
+mesh = SubResource("m_disc")
+surface_material_override/0 = SubResource("mat_disc")
+
+[node name="S1" type="MeshInstance3D" parent="WheelFR"]
+mesh = SubResource("m_spoke")
+surface_material_override/0 = SubResource("mat_rim")
+
+[node name="S2" type="MeshInstance3D" parent="WheelFR"]
+rotation_degrees = Vector3(72, 0, 0)
+mesh = SubResource("m_spoke")
+surface_material_override/0 = SubResource("mat_rim")
+
+[node name="S3" type="MeshInstance3D" parent="WheelFR"]
+rotation_degrees = Vector3(144, 0, 0)
+mesh = SubResource("m_spoke")
+surface_material_override/0 = SubResource("mat_rim")
+
+[node name="S4" type="MeshInstance3D" parent="WheelFR"]
+rotation_degrees = Vector3(36, 0, 0)
+mesh = SubResource("m_spoke")
+surface_material_override/0 = SubResource("mat_rim")
+
+[node name="S5" type="MeshInstance3D" parent="WheelFR"]
+rotation_degrees = Vector3(108, 0, 0)
+mesh = SubResource("m_spoke")
+surface_material_override/0 = SubResource("mat_rim")
 
 [node name="Smoke" type="GPUParticles3D" parent="WheelFR"]
 position = Vector3(0, -0.3, 0)
@@ -356,6 +472,40 @@ rotation_degrees = Vector3(0, 0, 90)
 mesh = SubResource("m_wheel")
 surface_material_override/0 = SubResource("mat_wheel")
 
+[node name="Rim" type="MeshInstance3D" parent="WheelRL"]
+rotation_degrees = Vector3(0, 0, 90)
+mesh = SubResource("m_rim")
+surface_material_override/0 = SubResource("mat_rim")
+
+[node name="Disc" type="MeshInstance3D" parent="WheelRL"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, -0.16, 0, 0)
+mesh = SubResource("m_disc")
+surface_material_override/0 = SubResource("mat_disc")
+
+[node name="S1" type="MeshInstance3D" parent="WheelRL"]
+mesh = SubResource("m_spoke")
+surface_material_override/0 = SubResource("mat_rim")
+
+[node name="S2" type="MeshInstance3D" parent="WheelRL"]
+rotation_degrees = Vector3(72, 0, 0)
+mesh = SubResource("m_spoke")
+surface_material_override/0 = SubResource("mat_rim")
+
+[node name="S3" type="MeshInstance3D" parent="WheelRL"]
+rotation_degrees = Vector3(144, 0, 0)
+mesh = SubResource("m_spoke")
+surface_material_override/0 = SubResource("mat_rim")
+
+[node name="S4" type="MeshInstance3D" parent="WheelRL"]
+rotation_degrees = Vector3(36, 0, 0)
+mesh = SubResource("m_spoke")
+surface_material_override/0 = SubResource("mat_rim")
+
+[node name="S5" type="MeshInstance3D" parent="WheelRL"]
+rotation_degrees = Vector3(108, 0, 0)
+mesh = SubResource("m_spoke")
+surface_material_override/0 = SubResource("mat_rim")
+
 [node name="Smoke" type="GPUParticles3D" parent="WheelRL"]
 position = Vector3(0, -0.3, 0)
 script = ExtResource("3_smoke")
@@ -376,6 +526,40 @@ damping_relaxation = 0.65
 rotation_degrees = Vector3(0, 0, 90)
 mesh = SubResource("m_wheel")
 surface_material_override/0 = SubResource("mat_wheel")
+
+[node name="Rim" type="MeshInstance3D" parent="WheelRR"]
+rotation_degrees = Vector3(0, 0, 90)
+mesh = SubResource("m_rim")
+surface_material_override/0 = SubResource("mat_rim")
+
+[node name="Disc" type="MeshInstance3D" parent="WheelRR"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0.16, 0, 0)
+mesh = SubResource("m_disc")
+surface_material_override/0 = SubResource("mat_disc")
+
+[node name="S1" type="MeshInstance3D" parent="WheelRR"]
+mesh = SubResource("m_spoke")
+surface_material_override/0 = SubResource("mat_rim")
+
+[node name="S2" type="MeshInstance3D" parent="WheelRR"]
+rotation_degrees = Vector3(72, 0, 0)
+mesh = SubResource("m_spoke")
+surface_material_override/0 = SubResource("mat_rim")
+
+[node name="S3" type="MeshInstance3D" parent="WheelRR"]
+rotation_degrees = Vector3(144, 0, 0)
+mesh = SubResource("m_spoke")
+surface_material_override/0 = SubResource("mat_rim")
+
+[node name="S4" type="MeshInstance3D" parent="WheelRR"]
+rotation_degrees = Vector3(36, 0, 0)
+mesh = SubResource("m_spoke")
+surface_material_override/0 = SubResource("mat_rim")
+
+[node name="S5" type="MeshInstance3D" parent="WheelRR"]
+rotation_degrees = Vector3(108, 0, 0)
+mesh = SubResource("m_spoke")
+surface_material_override/0 = SubResource("mat_rim")
 
 [node name="Smoke" type="GPUParticles3D" parent="WheelRR"]
 position = Vector3(0, -0.3, 0)
