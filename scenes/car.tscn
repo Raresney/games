@@ -35,25 +35,31 @@ size = Vector3(1.45, 0.04, 0.85)
 size = Vector3(1.3, 0.05, 1.2)
 
 [sub_resource type="BoxMesh" id="m_fender_f"]
-size = Vector3(0.55, 0.5, 1.4)
+size = Vector3(0.4, 0.18, 1.0)
 
 [sub_resource type="BoxMesh" id="m_fender_r"]
-size = Vector3(0.65, 0.55, 1.5)
+size = Vector3(0.5, 0.2, 1.2)
 
 [sub_resource type="BoxMesh" id="m_intake"]
 size = Vector3(0.05, 0.25, 0.85)
 
 [sub_resource type="BoxMesh" id="m_splitter"]
-size = Vector3(1.95, 0.04, 0.4)
+size = Vector3(2.2, 0.05, 0.55)
+
+[sub_resource type="BoxMesh" id="m_front_wing_post"]
+size = Vector3(0.06, 0.25, 0.05)
 
 [sub_resource type="BoxMesh" id="m_diffuser"]
-size = Vector3(1.85, 0.05, 0.45)
+size = Vector3(1.95, 0.06, 0.55)
+
+[sub_resource type="BoxMesh" id="m_nosecone"]
+size = Vector3(0.45, 0.22, 1.6)
 
 [sub_resource type="BoxMesh" id="m_spoiler"]
-size = Vector3(1.85, 0.06, 0.5)
+size = Vector3(2.0, 0.06, 0.55)
 
 [sub_resource type="BoxMesh" id="m_spoiler_l"]
-size = Vector3(0.06, 0.4, 0.5)
+size = Vector3(0.08, 0.85, 0.55)
 
 [sub_resource type="BoxMesh" id="m_hood_scoop"]
 size = Vector3(0.6, 0.12, 0.7)
@@ -213,19 +219,19 @@ position = Vector3(0, 0.42, -2.05)
 mesh = SubResource("m_cabin")
 
 [node name="FenderFL" type="MeshInstance3D" parent="."]
-position = Vector3(-0.75, 0.55, -1.4)
+position = Vector3(-0.85, 0.78, -1.4)
 mesh = SubResource("m_fender_f")
 
 [node name="FenderFR" type="MeshInstance3D" parent="."]
-position = Vector3(0.75, 0.55, -1.4)
+position = Vector3(0.85, 0.78, -1.4)
 mesh = SubResource("m_fender_f")
 
 [node name="FenderRL" type="MeshInstance3D" parent="."]
-position = Vector3(-0.7, 0.58, 1.5)
+position = Vector3(-0.85, 0.85, 1.5)
 mesh = SubResource("m_fender_r")
 
 [node name="FenderRR" type="MeshInstance3D" parent="."]
-position = Vector3(0.7, 0.58, 1.5)
+position = Vector3(0.85, 0.85, 1.5)
 mesh = SubResource("m_fender_r")
 
 [node name="IntakeL" type="MeshInstance3D" parent="."]
@@ -237,8 +243,22 @@ position = Vector3(0.97, 0.5, 0.4)
 mesh = SubResource("m_intake")
 
 [node name="Splitter" type="MeshInstance3D" parent="."]
-position = Vector3(0, 0.18, -2.18)
+position = Vector3(0, 0.16, -2.5)
 mesh = SubResource("m_splitter")
+
+[node name="FWPostL" type="MeshInstance3D" parent="."]
+position = Vector3(-0.2, 0.32, -2.5)
+mesh = SubResource("m_front_wing_post")
+surface_material_override/0 = SubResource("mat_carbon")
+
+[node name="FWPostR" type="MeshInstance3D" parent="."]
+position = Vector3(0.2, 0.32, -2.5)
+mesh = SubResource("m_front_wing_post")
+surface_material_override/0 = SubResource("mat_carbon")
+
+[node name="NoseCone" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.42, -2.45)
+mesh = SubResource("m_nosecone")
 
 [node name="Diffuser" type="MeshInstance3D" parent="."]
 position = Vector3(0, 0.18, 2.15)
@@ -292,17 +312,17 @@ position = Vector3(0.97, 0.28, 0)
 mesh = SubResource("m_skirt")
 
 [node name="Spoiler" type="MeshInstance3D" parent="."]
-position = Vector3(0, 1.1, 2.0)
+position = Vector3(0, 1.45, 2.0)
 mesh = SubResource("m_spoiler")
 surface_material_override/0 = SubResource("mat_carbon")
 
 [node name="SpoilerL" type="MeshInstance3D" parent="."]
-position = Vector3(-0.75, 0.85, 2.0)
+position = Vector3(-0.85, 1.05, 2.0)
 mesh = SubResource("m_spoiler_l")
 surface_material_override/0 = SubResource("mat_carbon")
 
 [node name="SpoilerR" type="MeshInstance3D" parent="."]
-position = Vector3(0.75, 0.85, 2.0)
+position = Vector3(0.85, 1.05, 2.0)
 mesh = SubResource("m_spoiler_l")
 surface_material_override/0 = SubResource("mat_carbon")
 
