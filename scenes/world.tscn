@@ -5,7 +5,7 @@
 [ext_resource type="Script" path="res://scripts/task_marker.gd" id="3_marker"]
 [ext_resource type="PackedScene" uid="uid://bhud00000001" path="res://scenes/hud.tscn" id="4_hud"]
 [ext_resource type="Script" path="res://scripts/city_decorator.gd" id="5_deco"]
-[ext_resource type="Script" path="res://scripts/city_decorator.gd" id="5_deco"]
+[ext_resource type="Script" path="res://scripts/traffic.gd" id="6_traffic"]
 
 [sub_resource type="ProceduralSkyMaterial" id="Sky_mat"]
 sky_top_color = Color(0.32, 0.55, 0.92, 1)
@@ -134,6 +134,9 @@ script = ExtResource("5_deco")
 
 [node name="CityDecorator" type="Node3D" parent="."]
 script = ExtResource("5_deco")
+
+[node name="Traffic" type="Node3D" parent="."]
+script = ExtResource("6_traffic")
 
 [node name="Buildings" type="Node3D" parent="."]
 
