@@ -44,7 +44,7 @@ adjustment_contrast = 1.05
 adjustment_saturation = 1.08
 
 [sub_resource type="PlaneMesh" id="Ground_mesh"]
-size = Vector2(600, 600)
+size = Vector2(1400, 1400)
 
 [sub_resource type="StandardMaterial3D" id="Ground_mat"]
 albedo_color = Color(0.25, 0.32, 0.2, 1)
@@ -53,7 +53,7 @@ roughness = 0.95
 [sub_resource type="WorldBoundaryShape3D" id="Ground_shape"]
 
 [sub_resource type="BoxMesh" id="Road_mesh"]
-size = Vector3(14, 0.05, 600)
+size = Vector3(14, 0.05, 1400)
 
 [sub_resource type="StandardMaterial3D" id="Road_mat"]
 albedo_color = Color(0.22, 0.22, 0.24, 1)
@@ -61,7 +61,7 @@ metallic = 0.05
 roughness = 0.6
 
 [sub_resource type="BoxMesh" id="Road2_mesh"]
-size = Vector3(600, 0.05, 14)
+size = Vector3(1400, 0.05, 14)
 
 [sub_resource type="SphereShape3D" id="MarkerShape"]
 radius = 5.0

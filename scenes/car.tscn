@@ -5,7 +5,33 @@
 [ext_resource type="Script" path="res://scripts/skid_smoke.gd" id="3_smoke"]
 
 [sub_resource type="BoxMesh" id="m_chassis"]
-size = Vector3(1.7, 0.22, 4.3)
+size = Vector3(1.0, 0.32, 4.3)
+
+[sub_resource type="BoxMesh" id="m_sidepod"]
+size = Vector3(0.45, 0.4, 2.4)
+
+[sub_resource type="BoxMesh" id="m_airbox"]
+size = Vector3(0.5, 0.7, 0.9)
+
+[sub_resource type="BoxMesh" id="m_airbox_top"]
+size = Vector3(0.35, 0.35, 0.45)
+
+[sub_resource type="BoxMesh" id="m_helmet"]
+size = Vector3(0.32, 0.36, 0.34)
+
+[sub_resource type="BoxMesh" id="m_halo_top"]
+size = Vector3(0.55, 0.06, 0.06)
+
+[sub_resource type="BoxMesh" id="m_halo_arm"]
+size = Vector3(0.06, 0.42, 0.06)
+
+[sub_resource type="BoxMesh" id="m_engine_cover"]
+size = Vector3(0.55, 0.42, 1.6)
+
+[sub_resource type="StandardMaterial3D" id="mat_helmet"]
+albedo_color = Color(0.06, 0.06, 0.07, 1)
+metallic = 0.5
+roughness = 0.25
 
 [sub_resource type="BoxMesh" id="m_lower"]
 size = Vector3(1.95, 0.12, 4.5)
@@ -361,9 +387,50 @@ mesh = SubResource("m_spoiler_l")
 surface_material_override/0 = SubResource("mat_carbon")
 
 [node name="HoodScoop" type="MeshInstance3D" parent="."]
+visible = false
 position = Vector3(0, 0.7, -0.95)
 mesh = SubResource("m_hood_scoop")
 surface_material_override/0 = SubResource("mat_carbon")
+
+[node name="Airbox" type="MeshInstance3D" parent="."]
+position = Vector3(0, 1.1, 0.35)
+mesh = SubResource("m_airbox")
+
+[node name="AirboxTop" type="MeshInstance3D" parent="."]
+position = Vector3(0, 1.55, 0.4)
+mesh = SubResource("m_airbox_top")
+
+[node name="EngineCover" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.65, 1.05)
+mesh = SubResource("m_engine_cover")
+
+[node name="Helmet" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.95, -0.35)
+mesh = SubResource("m_helmet")
+surface_material_override/0 = SubResource("mat_helmet")
+
+[node name="HaloTop" type="MeshInstance3D" parent="."]
+position = Vector3(0, 1.18, -0.35)
+mesh = SubResource("m_halo_top")
+surface_material_override/0 = SubResource("mat_carbon")
+
+[node name="HaloArmL" type="MeshInstance3D" parent="."]
+position = Vector3(-0.27, 0.97, -0.35)
+mesh = SubResource("m_halo_arm")
+surface_material_override/0 = SubResource("mat_carbon")
+
+[node name="HaloArmR" type="MeshInstance3D" parent="."]
+position = Vector3(0.27, 0.97, -0.35)
+mesh = SubResource("m_halo_arm")
+surface_material_override/0 = SubResource("mat_carbon")
+
+[node name="SidePodL" type="MeshInstance3D" parent="."]
+position = Vector3(-0.75, 0.45, 0.35)
+mesh = SubResource("m_sidepod")
+
+[node name="SidePodR" type="MeshInstance3D" parent="."]
+position = Vector3(0.75, 0.45, 0.35)
+mesh = SubResource("m_sidepod")
 
 [node name="StripeL" type="MeshInstance3D" parent="."]
 position = Vector3(-0.25, 0.62, 0)

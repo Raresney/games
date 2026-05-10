@@ -1,115 +1,171 @@
-[gd_scene format=3 uid="uid://bmenu000001"]
+[gd_scene load_steps=3 format=3 uid="uid://bmenu000001"]
 
-[ext_resource type="Script" uid="uid://b3l67vw7gt3og" path="res://scripts/main_menu.gd" id="1_menu"]
+[ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_menu"]
 
-[node name="MainMenu" type="Control" unique_id=2109870286]
+[sub_resource type="StyleBoxFlat" id="sb_panel"]
+bg_color = Color(0.08, 0.08, 0.13, 0.85)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.2, 0.85, 1.0, 0.5)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+
+[node name="MainMenu" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
 script = ExtResource("1_menu")
 
-[node name="BG" type="ColorRect" parent="." unique_id=1645254397]
+[node name="BG" type="ColorRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.05, 0.05, 0.1, 1)
+color = Color(0.04, 0.04, 0.09, 1)
 
-[node name="Title" type="Label" parent="." unique_id=1656030876]
+[node name="Title" type="Label" parent="."]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_top = 40.0
-offset_bottom = 110.0
-grow_horizontal = 2
+offset_top = 24.0
+offset_bottom = 80.0
 theme_override_colors/font_color = Color(1, 0.85, 0.1, 1)
-theme_override_font_sizes/font_size = 52
+theme_override_font_sizes/font_size = 46
 text = "DRIVING SIMULATOR"
 horizontal_alignment = 1
 
-[node name="VBox" type="VBoxContainer" parent="." unique_id=2030799700]
+[node name="MoneyLabel" type="Label" parent="."]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
 offset_left = -260.0
-offset_top = -200.0
-offset_right = 260.0
-offset_bottom = 200.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/separation = 16
+offset_top = 30.0
+offset_right = -30.0
+offset_bottom = 70.0
+theme_override_colors/font_color = Color(1, 0.85, 0.1, 1)
+theme_override_font_sizes/font_size = 26
+text = "💰  $0"
+horizontal_alignment = 2
 
-[node name="CarName" type="Label" parent="VBox" unique_id=2100600664]
+[node name="LeftPanel" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 40.0
+offset_top = -240.0
+offset_right = 540.0
+offset_bottom = 240.0
+theme_override_styles/panel = SubResource("sb_panel")
+
+[node name="V" type="VBoxContainer" parent="LeftPanel"]
+theme_override_constants/separation = 14
+
+[node name="CarName" type="Label" parent="LeftPanel/V"]
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.75, 0, 1)
-theme_override_font_sizes/font_size = 32
+theme_override_colors/font_color = Color(1, 0.78, 0, 1)
+theme_override_font_sizes/font_size = 30
 text = "Lamborghini Huracán"
 horizontal_alignment = 1
 
-[node name="Preview" type="ColorRect" parent="VBox" unique_id=1701497219]
-custom_minimum_size = Vector2(480, 130)
+[node name="Preview" type="ColorRect" parent="LeftPanel/V"]
+custom_minimum_size = Vector2(460, 160)
 layout_mode = 2
-color = Color(1, 0.75, 0, 1)
+color = Color(1, 0.78, 0, 1)
 
-[node name="CarDesc" type="Label" parent="VBox" unique_id=1909337891]
+[node name="CarDesc" type="Label" parent="LeftPanel/V"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 16
-text = "Top Speed: 260 km/h
-0-100 km/h in 3.2s
-Engine: V10 5.2L"
+text = "Top Speed: 235 km/h
+0-100 km/h in 2.9s
+Engine: V10 5.2L 640HP"
 horizontal_alignment = 1
 
-[node name="Counter" type="Label" parent="VBox" unique_id=1055468518]
+[node name="Counter" type="Label" parent="LeftPanel/V"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.7, 0.7, 0.7, 1)
 theme_override_font_sizes/font_size = 14
 text = "1 / 3"
 horizontal_alignment = 1
 
-[node name="NavRow" type="HBoxContainer" parent="VBox" unique_id=1528702602]
+[node name="NavRow" type="HBoxContainer" parent="LeftPanel/V"]
 layout_mode = 2
-theme_override_constants/separation = 30
+theme_override_constants/separation = 24
 alignment = 1
 
-[node name="PrevBtn" type="Button" parent="VBox/NavRow" unique_id=2097567075]
-custom_minimum_size = Vector2(140, 45)
+[node name="PrevBtn" type="Button" parent="LeftPanel/V/NavRow"]
+custom_minimum_size = Vector2(140, 42)
 layout_mode = 2
 text = "◀  Previous"
 
-[node name="NextBtn" type="Button" parent="VBox/NavRow" unique_id=1923491202]
-custom_minimum_size = Vector2(140, 45)
+[node name="NextBtn" type="Button" parent="LeftPanel/V/NavRow"]
+custom_minimum_size = Vector2(140, 42)
 layout_mode = 2
 text = "Next  ▶"
 
-[node name="PlayBtn" type="Button" parent="VBox" unique_id=1849914450]
+[node name="PlayBtn" type="Button" parent="LeftPanel/V"]
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.1, 0.95, 0.35, 1)
 theme_override_font_sizes/font_size = 26
 text = "▶  PLAY"
 
-[node name="Hint" type="Label" parent="." unique_id=901683680]
+[node name="RightPanel" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -540.0
+offset_top = -240.0
+offset_right = -40.0
+offset_bottom = 240.0
+theme_override_styles/panel = SubResource("sb_panel")
+
+[node name="V" type="VBoxContainer" parent="RightPanel"]
+theme_override_constants/separation = 10
+
+[node name="ColorTitle" type="Label" parent="RightPanel/V"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.2, 0.95, 1.0, 1)
+theme_override_font_sizes/font_size = 22
+text = "🎨  PAINT SHOP"
+horizontal_alignment = 1
+
+[node name="Hint" type="Label" parent="RightPanel/V"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.85, 1, 0.8)
+theme_override_font_sizes/font_size = 12
+text = "Click a color to buy & equip"
+horizontal_alignment = 1
+
+[node name="Scroll" type="ScrollContainer" parent="RightPanel/V"]
+layout_mode = 2
+size_flags_vertical = 3
+custom_minimum_size = Vector2(0, 380)
+
+[node name="Grid" type="GridContainer" parent="RightPanel/V/Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+columns = 2
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 10
+
+[node name="ControlsHint" type="Label" parent="."]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -40.0
-grow_horizontal = 2
-grow_vertical = 0
-theme_override_colors/font_color = Color(0.7, 0.7, 0.7, 1)
-theme_override_font_sizes/font_size = 14
-text = "ENTER = Play     ←/→ = Change Car     Click on buttons too"
+offset_top = -36.0
 horizontal_alignment = 1
-
-[connection signal="pressed" from="VBox/NavRow/PrevBtn" to="." method="_on_prev_pressed"]
-[connection signal="pressed" from="VBox/NavRow/NextBtn" to="." method="_on_next_pressed"]
-[connection signal="pressed" from="VBox/PlayBtn" to="." method="_on_play_pressed"]
+text = "ENTER = Play     ←/→ = Change Car     Click colors to unlock & equip"
+theme_override_font_sizes/font_size = 13
+theme_override_colors/font_color = Color(0.85, 0.9, 1, 0.7)

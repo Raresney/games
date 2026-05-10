@@ -46,7 +46,10 @@ func on_marker_reached(index: int) -> void:
 		# proportional bonus, max +100% at 0s, 0 at limit
 		var ratio: float = clamp(1.0 - elapsed / time_limit, 0.0, 1.0)
 		bonus = int(tasks[current_task]["reward"] * ratio)
-	score += tasks[current_task]["reward"] + bonus
+	var earned: int = tasks[current_task]["reward"] + bonus
+	score += earned
+	if GameData.has_method("add_money"):
+		GameData.add_money(earned)
 	task_completed.emit(current_task)
 	current_task += 1
 	if current_task >= tasks.size():

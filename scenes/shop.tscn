@@ -1,0 +1,116 @@
+[gd_scene format=3 uid="uid://bshop00000001"]
+
+[ext_resource type="Script" path="res://scripts/shop.gd" id="1_shop"]
+
+[node name="Shop" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_shop")
+
+[node name="BG" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.05, 0.05, 0.1, 1)
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 30.0
+offset_bottom = 80.0
+theme_override_colors/font_color = Color(1, 0.85, 0.1, 1)
+theme_override_font_sizes/font_size = 38
+text = "🛒  GARAGE / SHOP"
+horizontal_alignment = 1
+
+[node name="MoneyLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 80.0
+offset_bottom = 110.0
+theme_override_colors/font_color = Color(1, 0.85, 0.1, 1)
+theme_override_font_sizes/font_size = 22
+text = "💰  $0"
+horizontal_alignment = 1
+
+[node name="CarLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 120.0
+offset_bottom = 150.0
+theme_override_colors/font_color = Color(1, 0.75, 0, 1)
+theme_override_font_sizes/font_size = 20
+text = "Lamborghini"
+horizontal_alignment = 1
+
+[node name="CarRow" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 150.0
+offset_bottom = 195.0
+theme_override_constants/separation = 30
+alignment = 1
+
+[node name="PrevCar" type="Button" parent="CarRow"]
+custom_minimum_size = Vector2(120, 40)
+layout_mode = 2
+text = "◀ Car"
+
+[node name="NextCar" type="Button" parent="CarRow"]
+custom_minimum_size = Vector2(120, 40)
+layout_mode = 2
+text = "Car ▶"
+
+[node name="Scroll" type="ScrollContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 100.0
+offset_top = 220.0
+offset_right = -100.0
+offset_bottom = -90.0
+
+[node name="Grid" type="GridContainer" parent="Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+columns = 4
+theme_override_constants/h_separation = 20
+theme_override_constants/v_separation = 20
+
+[node name="BackBtn" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 30.0
+offset_top = -65.0
+offset_right = 230.0
+offset_bottom = -25.0
+custom_minimum_size = Vector2(0, 40)
+theme_override_font_sizes/font_size = 18
+text = "◀  Back to Menu"
+
+[node name="Hint" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -300.0
+offset_top = -55.0
+offset_right = 300.0
+offset_bottom = -25.0
+theme_override_colors/font_color = Color(0.7, 0.85, 1, 0.7)
+theme_override_font_sizes/font_size = 14
+text = "Click a color to buy/equip   |   Earn money by completing race tasks"
+horizontal_alignment = 1

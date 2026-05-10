@@ -23,6 +23,8 @@ func _ready() -> void:
 	_add_streetlamps()
 	_add_road_markings()
 	_spawn_traffic_cones()
+	_spawn_ramps()
+	_spawn_gas_stations()
 
 func _decorate_buildings() -> void:
 	var buildings := get_node_or_null("../Buildings")
@@ -185,9 +187,9 @@ func _spawn_extra_buildings() -> void:
 	var rng := RandomNumberGenerator.new()
 	rng.seed = 42
 	var spawned: int = 0
-	for _i in 60:
-		var x: float = rng.randf_range(-260, 260)
-		var z: float = rng.randf_range(-260, 260)
+	for _i in 180:
+		var x: float = rng.randf_range(-650, 650)
+		var z: float = rng.randf_range(-650, 650)
 		# Keep clear of roads
 		if abs(x) < 14 or abs(z) < 14 or (abs(x - 80) < 12) or (abs(x + 80) < 12) or (abs(z - 80) < 12) or (abs(z + 80) < 12):
 			continue
@@ -220,9 +222,9 @@ func _spawn_trees() -> void:
 	var leaves_mat := StandardMaterial3D.new()
 	leaves_mat.albedo_color = Color(0.18, 0.42, 0.15)
 	leaves_mat.roughness = 0.85
-	for _i in 80:
-		var x: float = rng.randf_range(-280, 280)
-		var z: float = rng.randf_range(-280, 280)
+	for _i in 200:
+		var x: float = rng.randf_range(-680, 680)
+		var z: float = rng.randf_range(-680, 680)
 		if abs(x) < 10 or abs(z) < 10 or (abs(x - 80) < 10) or (abs(x + 80) < 10) or (abs(z - 80) < 10) or (abs(z + 80) < 10):
 			continue
 		var root := Node3D.new()
@@ -273,6 +275,83 @@ func _spawn_traffic_cones() -> void:
 		cone.position = Vector3(x, 0.3, z)
 		cone.material_override = cone_mat
 		add_child(cone)
+
+func _spawn_ramps() -> void:
+	# Drivable ramps placed off-road to launch the car
+	var ramp_positions: Array = [
+		Vector3(40, 0, 40), Vector3(-40, 0, 40),
+		Vector3(40, 0, -40), Vector3(-40, 0, -40),
+		Vector3(120, 0, 0), Vector3(-120, 0, 0),
+		Vector3(0, 0, 120), Vector3(0, 0, -120),
+	]
+	for pos in ramp_positions:
+		var ramp := CSGBox3D.new()
+		ramp.size = Vector3(8, 1.6, 6)
+		ramp.position = pos + Vector3(0, 0.8, 0)
+		# Tilt forward (rotate around X)
+		ramp.rotation_degrees = Vector3(-15, randf() * 360.0, 0)
+		ramp.use_collision = true
+		var mat := StandardMaterial3D.new()
+		mat.albedo_color = Color(0.95, 0.4, 0.05, 1)
+		mat.emission_enabled = true
+		mat.emission = Color(0.95, 0.4, 0.05, 1)
+		mat.emission_energy_multiplier = 0.2
+		ramp.material = mat
+		add_child(ramp)
+
+func _spawn_gas_stations() -> void:
+	# Cosmetic gas stations at major intersections
+	var stations: Array = [
+		Vector3(40, 0, 40), Vector3(-40, 0, -40), Vector3(120, 0, 90), Vector3(-120, 0, -90)
+	]
+	for pos in stations:
+		_make_gas_station(pos)
+
+func _make_gas_station(pos: Vector3) -> void:
+	var root := Node3D.new()
+	root.position = pos
+	add_child(root)
+	# Canopy roof
+	var canopy := MeshInstance3D.new()
+	var cm := BoxMesh.new()
+	cm.size = Vector3(12, 0.4, 8)
+	canopy.mesh = cm
+	canopy.position = Vector3(0, 5.0, 0)
+	var canopy_mat := StandardMaterial3D.new()
+	canopy_mat.albedo_color = Color(0.95, 0.95, 0.95)
+	canopy.material_override = canopy_mat
+	root.add_child(canopy)
+	# Pillars
+	for x_off in [-5.0, 5.0]:
+		for z_off in [-3.5, 3.5]:
+			var pillar := MeshInstance3D.new()
+			var pm := BoxMesh.new()
+			pm.size = Vector3(0.3, 5.0, 0.3)
+			pillar.mesh = pm
+			pillar.position = Vector3(x_off, 2.5, z_off)
+			var pill_mat := StandardMaterial3D.new()
+			pill_mat.albedo_color = Color(0.6, 0.6, 0.65)
+			pill_mat.metallic = 0.5
+			pillar.material_override = pill_mat
+			root.add_child(pillar)
+	# Pumps (2)
+	for x_off in [-2.0, 2.0]:
+		var pump := MeshInstance3D.new()
+		var pm := BoxMesh.new()
+		pm.size = Vector3(0.6, 1.6, 0.5)
+		pump.mesh = pm
+		pump.position = Vector3(x_off, 0.8, 0)
+		var pump_mat := StandardMaterial3D.new()
+		pump_mat.albedo_color = Color(0.95, 0.15, 0.1)
+		pump.material_override = pump_mat
+		root.add_child(pump)
+	# Sign light
+	var sign_light := OmniLight3D.new()
+	sign_light.position = Vector3(0, 5.5, 0)
+	sign_light.light_color = Color(1, 0.95, 0.6)
+	sign_light.light_energy = 1.5
+	sign_light.omni_range = 16.0
+	root.add_child(sign_light)
 
 func _add_road_markings() -> void:
 	# Glowing center dashes — neon yellow/cyan

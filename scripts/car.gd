@@ -22,6 +22,9 @@ func setup_from_data(data: Dictionary) -> void:
 	max_steer_angle = data.get("max_steer", 0.5)
 	max_brake = 42.0
 	var car_color: Color = data.get("color", Color.WHITE)
+	# Use customized color if set
+	if GameData.has_method("get_active_color"):
+		car_color = GameData.get_active_color(GameData.selected_car)
 	var accent_color: Color = data.get("accent", Color(0.05, 0.05, 0.05, 1))
 	var paint := StandardMaterial3D.new()
 	paint.albedo_color = car_color
@@ -35,9 +38,14 @@ func setup_from_data(data: Dictionary) -> void:
 	accent.albedo_color = accent_color
 	accent.metallic = 0.6
 	accent.roughness = 0.35
-	for n in ["CarBody", "Nose", "NoseCone", "Tail", "Hood", "MirrorL", "MirrorR", "FenderFL", "FenderFR", "FenderRL", "FenderRR", "CarRoof", "SidePanelL", "SidePanelR", "TaperFL", "TaperFR", "TaperRL", "TaperRR"]:
+	# F1-style: paint goes on chassis and aero pieces
+	for n in ["CarBody", "Nose", "NoseCone", "Tail", "EngineCover", "Airbox", "AirboxTop", "SidePodL", "SidePodR", "FenderFL", "FenderFR", "FenderRL", "FenderRR"]:
 		if has_node(n):
 			get_node(n).set_surface_override_material(0, paint)
+	# Hide non-F1 elements (no roof, no roadcar windows, no mirrors on chassis side)
+	for n in ["CarRoof", "Glass", "CabinFront", "CabinRear", "Hood", "HoodScoop", "APillarL", "APillarR", "MirrorL", "MirrorR", "SidePanelL", "SidePanelR", "TaperFL", "TaperFR", "TaperRL", "TaperRR"]:
+		if has_node(n):
+			get_node(n).visible = false
 	for n in ["LowerBody", "Splitter", "Diffuser", "IntakeL", "IntakeR", "Spoiler", "SpoilerL", "SpoilerR", "SideSkirtL", "SideSkirtR"]:
 		if has_node(n):
 			get_node(n).set_surface_override_material(0, accent)
