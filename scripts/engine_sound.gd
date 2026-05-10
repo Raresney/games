@@ -16,8 +16,9 @@ func _ready() -> void:
 	gen.mix_rate = SR
 	gen.buffer_length = 0.1
 	stream = gen
-	unit_size = 8.0
-	max_db = 4.0
+	unit_size = 18.0
+	max_db = 12.0
+	max_distance = 80.0
 	play()
 	_playback = get_stream_playback()
 	car = get_parent() as VehicleBody3D
@@ -56,9 +57,12 @@ func _process(delta: float) -> void:
 		var sample: float = (pulse * 0.7 + s2 * 0.3 + s3 * 0.2 + rumble) * (0.25 + load * 0.45)
 		# Backfire pop bursts — random sharp loud noise during pop window
 		if pop_timer > 0.0:
-			# Random sparse pop bursts (~6-8 per second)
-			if randf() < 0.0028:
-				sample += (randf() - 0.5) * 1.6
-			# Sustained crackle background
-			sample += (randf() - 0.5) * 0.45 * (pop_timer / 0.45)
+			# Sharp distinct pop hits (~10-12 per second), HARD CLIPPED for crack
+			if randf() < 0.005:
+				var pop: float = (randf() - 0.5) * 4.0
+				sample += clamp(pop, -1.0, 1.0)
+			# Sustained crackle (machine-gun style)
+			sample += clamp((randf() - 0.5) * 1.4 * (pop_timer / 0.45), -1.0, 1.0)
+			# Low boom thump under the crackle
+			sample += sin(_phase * TAU * 0.35) * 0.4 * (pop_timer / 0.45)
 		_playback.push_frame(Vector2(sample, sample))

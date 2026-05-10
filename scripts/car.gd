@@ -35,7 +35,7 @@ func setup_from_data(data: Dictionary) -> void:
 	accent.albedo_color = accent_color
 	accent.metallic = 0.6
 	accent.roughness = 0.35
-	for n in ["CarBody", "Nose", "NoseCone", "Tail", "Hood", "MirrorL", "MirrorR", "FenderFL", "FenderFR", "FenderRL", "FenderRR", "CarRoof", "SidePanelL", "SidePanelR"]:
+	for n in ["CarBody", "Nose", "NoseCone", "Tail", "Hood", "MirrorL", "MirrorR", "FenderFL", "FenderFR", "FenderRL", "FenderRR", "CarRoof", "SidePanelL", "SidePanelR", "TaperFL", "TaperFR", "TaperRL", "TaperRR"]:
 		if has_node(n):
 			get_node(n).set_surface_override_material(0, paint)
 	for n in ["LowerBody", "Splitter", "Diffuser", "IntakeL", "IntakeR", "Spoiler", "SpoilerL", "SpoilerR", "SideSkirtL", "SideSkirtR"]:

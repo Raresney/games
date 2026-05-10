@@ -5,10 +5,26 @@
 [ext_resource type="Script" path="res://scripts/skid_smoke.gd" id="3_smoke"]
 
 [sub_resource type="BoxMesh" id="m_chassis"]
-size = Vector3(1.85, 0.20, 4.4)
+size = Vector3(1.7, 0.22, 4.3)
 
 [sub_resource type="BoxMesh" id="m_lower"]
-size = Vector3(1.95, 0.14, 4.5)
+size = Vector3(1.95, 0.12, 4.5)
+
+[sub_resource type="PrismMesh" id="m_taper_front_l"]
+size = Vector3(0.4, 0.4, 1.5)
+left_to_right = 0.0
+
+[sub_resource type="PrismMesh" id="m_taper_front_r"]
+size = Vector3(0.4, 0.4, 1.5)
+left_to_right = 1.0
+
+[sub_resource type="PrismMesh" id="m_taper_rear_l"]
+size = Vector3(0.4, 0.4, 1.4)
+left_to_right = 0.0
+
+[sub_resource type="PrismMesh" id="m_taper_rear_r"]
+size = Vector3(0.4, 0.4, 1.4)
+left_to_right = 1.0
 
 [sub_resource type="BoxMesh" id="m_side_panel"]
 size = Vector3(0.05, 0.55, 3.2)
@@ -200,6 +216,24 @@ mesh = SubResource("m_side_panel")
 [node name="SidePanelR" type="MeshInstance3D" parent="."]
 position = Vector3(0.92, 0.55, 0)
 mesh = SubResource("m_side_panel")
+
+[node name="TaperFL" type="MeshInstance3D" parent="."]
+position = Vector3(-0.85, 0.4, -1.55)
+mesh = SubResource("m_taper_front_l")
+
+[node name="TaperFR" type="MeshInstance3D" parent="."]
+position = Vector3(0.85, 0.4, -1.55)
+mesh = SubResource("m_taper_front_r")
+
+[node name="TaperRL" type="MeshInstance3D" parent="."]
+position = Vector3(-0.85, 0.4, 1.5)
+rotation_degrees = Vector3(0, 180, 0)
+mesh = SubResource("m_taper_rear_l")
+
+[node name="TaperRR" type="MeshInstance3D" parent="."]
+position = Vector3(0.85, 0.4, 1.5)
+rotation_degrees = Vector3(0, 180, 0)
+mesh = SubResource("m_taper_rear_r")
 
 [node name="CarRoof" type="MeshInstance3D" parent="."]
 position = Vector3(0, 1.05, 0.1)
