@@ -6,6 +6,7 @@ var task_manager: Node = null
 @onready var speed_label: Label = $SpeedPanel/V/SpeedLabel
 @onready var speed_bar: ProgressBar = $SpeedPanel/V/SpeedBar
 @onready var nitro_bar: ProgressBar = $SpeedPanel/V/NitroBar
+@onready var gear_label: Label = $SpeedPanel/V/GearLabel
 @onready var task_label: Label = $TaskPanel/V/TaskLabel
 @onready var score_label: Label = $TaskPanel/V/ScoreLabel
 @onready var car_label: Label = $SpeedPanel/V/CarLabel
@@ -30,6 +31,17 @@ func _process(_delta: float) -> void:
 		nitro_bar.value = car.nitro
 		drift_score_label.text = str(car.drift_score)
 		drift_combo.value = car.drift_combo
+		# Gear + transmission mode
+		var mode_tag: String = "[M]" if car.manual_mode else "[A]"
+		var gear_str: String = ""
+		if car.current_gear == -1:
+			gear_str = "R"
+		elif car.current_gear == 0:
+			gear_str = "N"
+		else:
+			gear_str = str(car.current_gear)
+		gear_label.text = mode_tag + "  GEAR  " + gear_str
+		gear_label.modulate = Color(1.0, 0.5, 0.3) if car.manual_mode else Color(0.2, 1.0, 0.45)
 		# Pulse drift panel when actively drifting
 		if car.is_drifting:
 			drift_panel.modulate = Color(1.0, 0.6, 1.0, 1)

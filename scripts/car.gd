@@ -16,6 +16,21 @@ var drift_combo: float = 0.0       # current combo bar (drops if not drifting)
 var is_drifting: bool = false
 var prev_velocity: Vector3 = Vector3.ZERO
 
+# Transmission
+var manual_mode: bool = false
+var current_gear: int = 1   # -1=R, 0=N, 1..6 = D
+const GEAR_RATIOS: Array = [
+	# index 0 = neutral, 1..6 = D1..D6, special index for reverse handled separately
+	{"force_mult": 0.0, "speed_top_pct": 0.0},   # N
+	{"force_mult": 1.5, "speed_top_pct": 0.20},  # 1
+	{"force_mult": 1.25, "speed_top_pct": 0.38}, # 2
+	{"force_mult": 1.0, "speed_top_pct": 0.55},  # 3
+	{"force_mult": 0.85, "speed_top_pct": 0.72}, # 4
+	{"force_mult": 0.70, "speed_top_pct": 0.88}, # 5
+	{"force_mult": 0.55, "speed_top_pct": 1.0},  # 6
+]
+const REVERSE_RATIO: Dictionary = {"force_mult": 0.7, "speed_top_pct": 0.35}
+
 func setup_from_data(data: Dictionary) -> void:
 	engine_force_max = data.get("engine_force", 1000.0) * 11.0
 	top_speed = data.get("top_speed", 100.0) * 1.0
@@ -82,24 +97,59 @@ func _physics_process(delta: float) -> void:
 	var boost_mult: float = 2.2 if boost_active else 1.0
 	var top_speed_now: float = top_speed * boost_mult
 
-	# Engine + brake
+	# Transmission: toggle + shifts
+	if Input.is_action_just_pressed("toggle_trans"):
+		manual_mode = not manual_mode
+	if manual_mode:
+		if Input.is_action_just_pressed("gear_up"):
+			current_gear = min(current_gear + 1, 6)
+		if Input.is_action_just_pressed("gear_down"):
+			current_gear = max(current_gear - 1, -1)
+	else:
+		# Auto: shift up at high speed pct, shift down when slow
+		var pct_now: float = speed / max(top_speed, 0.1)
+		if current_gear < 1 and throttle > 0.0:
+			current_gear = 1
+		if pct_now > 0.95 and current_gear < 6 and current_gear >= 1:
+			current_gear += 1
+		elif pct_now < 0.15 and current_gear > 1:
+			current_gear -= 1
+
+	var ratio: Dictionary = REVERSE_RATIO if current_gear == -1 else GEAR_RATIOS[max(current_gear, 0)]
+	var gear_force: float = ratio["force_mult"] * engine_force_max
+	var gear_speed_cap: float = ratio["speed_top_pct"] * top_speed
+
+	# Engine + brake (gear-limited)
 	if throttle > 0.0:
-		if speed < top_speed_now:
-			engine_force = -throttle * engine_force_max * boost_mult
-		else:
+		if current_gear == -1:
 			engine_force = 0.0
-		brake = 0.0
+			brake = max_brake * 0.5
+		elif current_gear == 0:
+			engine_force = 0.0
+			brake = 0.0
+		else:
+			if speed < gear_speed_cap * boost_mult:
+				engine_force = -throttle * gear_force * boost_mult
+			else:
+				engine_force = 0.0
+			brake = 0.0
 	elif throttle < 0.0:
 		var fwd_speed: float = transform.basis.z.dot(linear_velocity)
 		if fwd_speed > 2.0:
 			engine_force = 0.0
 			brake = max_brake * abs(throttle)
-		elif speed < top_speed * 0.35:
-			engine_force = -throttle * engine_force_max * 0.45
-			brake = 0.0
 		else:
-			engine_force = 0.0
-			brake = 0.0
+			if not manual_mode:
+				current_gear = -1
+				ratio = REVERSE_RATIO
+				gear_force = ratio["force_mult"] * engine_force_max
+				gear_speed_cap = ratio["speed_top_pct"] * top_speed
+			if current_gear == -1 and speed < gear_speed_cap:
+				engine_force = -throttle * gear_force
+				brake = 0.0
+			else:
+				engine_force = 0.0
+				brake = 0.0
 	else:
 		engine_force = 0.0
 		brake = 2.0
